@@ -24,15 +24,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en">
-        <body className="bg-gray-50">
-          <nav className="bg-white shadow p-4 flex justify-center gap-6">
-            <Link href="/" className="text-gray-700 hover:text-gray-900">Home</Link>
-            <Link href="/venues" className="text-gray-700 hover:text-gray-900">Venues</Link>
-          </nav>
-          <main>{children}</main>
-        </body>
+    <html lang="en">
+      <body className="bg-gray-50 relative min-h-screen flex flex-col">
+        {/* Scrollable content */}
+        <main className="flex-1 px-6 py-8">
+          {children}
+        </main>
+
+        {/* Bottom nav stays at bottom but scrolls with page */}
+        <nav className="sticky bottom-0 bg-white shadow-inner p-4 flex justify-around">
+          <Link href="/" className="text-gray-700 hover:text-gray-900 text-sm font-medium">
+            Home
+          </Link>
+          <Link href="/feed" className="text-gray-700 hover:text-gray-900 text-sm font-medium">
+            Feed
+          </Link>
+          <Link href="/search" className="text-gray-700 hover:text-gray-900 text-sm font-medium">
+            Search
+          </Link>
+          <Link href="/account" className="text-gray-700 hover:text-gray-900 text-sm font-medium">
+            Account
+          </Link>
+        </nav>
+      </body>
     </html>
   );
 }
