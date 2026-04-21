@@ -6,6 +6,7 @@ export default function ProfileForm() {
     const [profile, setProfile] = useState({
         name: '',
         email: '',
+        location: '',
         bio: '',
     })
     const [saved, setSaved]  = useState(false)
@@ -55,6 +56,21 @@ export default function ProfileForm() {
                 />
             </div>
 
+            {/* Location */}
+            <div className = "flex flex-col gap-1">
+                <label className = "text-sm font-medium text-white-700"> Location </label>
+                <input
+                name = "location"
+                value = {profile.location}
+                onChange = {handleChange}
+                required
+                placeholder = "City, State"
+                className ="px-4 py-2 border border-gray-300 rounded-lg text-sm
+                            focus:outline-none focus:ring-2 focus:ring-blue-500
+                            bg-white text-gray-900 placeholder-gray-400"
+                />
+            </div>
+
             {/* Bio */}
             <div className = "flex flex-col gap-1">
                 <label className = "text-sm font-medium text-white-700">Bio</label>
@@ -77,21 +93,14 @@ export default function ProfileForm() {
                 className ="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white
                             text-sm font-medium rounded-lg transition-colors"
                 >
-                Save Changes
+                Create Account
                 </button>
-
-                <button
-                type = "button"
-                className ="w-full px-4 py-2 border border-gray-300 hover:bg-gray-100
-                            text-gray-600 text-sm font-medium rounded-lg transition-colors"
-                >
-                Sign Out
-                </button>
+                
             </div>
 
             {saved && (
                 <p className="text-sm text-green-500 text-center">
-                Changes saved!
+                Account created!
                 </p>
             )}
         </form>
