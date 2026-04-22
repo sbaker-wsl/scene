@@ -16,5 +16,5 @@ export default function TestPage() {
 		fetchTest();
 	}, []);
 
-	return <div>Check your browser console for API output.</div>;
+	return <div className = "text-white">Check your browser console for API output.</div>;
 }
