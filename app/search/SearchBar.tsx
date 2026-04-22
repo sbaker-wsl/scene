@@ -29,7 +29,7 @@ export default function SearchBar({ onSearch }: Props) {
             <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="h-10 px-3 text-sm border border-gray-300 rounded-l-lg
+                className="h-10 px-1 pr-2 text-sm border border-gray-300 rounded-l-lg
                         bg-gray-50 text-gray-600 focus:outline-none focus:ring-2
                         focus:ring-blue-500"
             >

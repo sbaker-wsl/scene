@@ -14,7 +14,7 @@ class User {
 }
 
 export default function VenuesPage() {
-    const user = new User("Baby Bilal", "sweetums!@gmail.com");
+    const user = new User("nothin so far", "sweetums!@gmail.com");
     return (
         <div className="min-h-screen bg-gray-100 p-8">
             <h1 className="text-4xl font-bold text-center mb-6">Music Venues</h1>

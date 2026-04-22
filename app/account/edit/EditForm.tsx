@@ -66,7 +66,7 @@ export default function EditForm() {
 
             {/* Bio */}
             <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-white-700">Bio</label>
+                <label className="text-sm font-medium text-white">Bio</label>
                 <textarea
                 name="bio"
                 value={profile.bio}
@@ -82,7 +82,7 @@ export default function EditForm() {
 
             {/* Location */}
             <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-white-700">Location</label>
+                <label className="text-sm font-medium text-white">Location</label>
                 <input
                 name="location"
                 value={profile.location}

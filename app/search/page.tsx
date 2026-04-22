@@ -12,13 +12,15 @@ export default function SearchPage() {
 	}
 
 	return ( 
-		<div className = "flex flex-col gap-6">
-			<SearchBar onSearch = {handleSearch} />
+		<div className = "flex flex-col items-center gap-6 px-6 pt-5">
+			<div className = "w-full max-w-2xl">
+				<SearchBar onSearch = {handleSearch} />
+			</div>
 
 			{results && (
 				<p className="text-sm text-gray-500">
-					Searching for <span className="font-medium text-white-800">"{results.query}"</span> in{' '}
-					<span className="font-medium text-white-800">{results.filter}</span>
+					Searching for <span className="font-medium text-white">"{results.query}"</span> in{' '}
+					<span className="font-medium text-white">{results.filter}</span>
 				</p>
 			)}
 		</div>

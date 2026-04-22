@@ -16,19 +16,19 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen gap-6">
+        <div className="flex flex-col items-center justify-center bg-black min-h-screen gap-6">
             <div className="w-full max-w-md flex flex-col gap-6">
 
                 {/* Header */}
                 <div className="text-center">
-                    <h1 className="text-2xl font-semibold text-white-800">Welcome back</h1>
+                    <h1 className="text-2xl font-semibold text-white">Welcome back</h1>
                     <p className="text-sm text-gray-400 mt-1">Sign in to your account</p>
                 </div>
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
-                        <label className="text-sm font-medium text-white-700">Email</label>
+                        <label className="text-sm font-medium text-white">Email</label>
                         <input
                         name="email"
                         type="email"
@@ -44,7 +44,7 @@ export default function LoginPage() {
 
                     <div className="flex flex-col gap-1">
                         <div className="flex justify-between items-center">
-                        <label className="text-sm font-medium text-white-700">Password</label>
+                        <label className="text-sm font-medium text-white">Password</label>
                         <button
                             type="button"
                             className="text-xs text-blue-500 hover:text-blue-600"

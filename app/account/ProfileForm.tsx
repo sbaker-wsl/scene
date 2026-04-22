@@ -65,7 +65,7 @@ export default function ProfileForm() {
             <hr className="border-gray-200" />
             {/* Name */}
             <div className = "flex flex-col gap-1">
-                <label className = "text-sm font-medium text-white-700">Name</label>
+                <label className = "text-sm font-medium text-white">Name</label>
                 <input
                 name = "name"
                 value = {profile.name}
@@ -80,7 +80,7 @@ export default function ProfileForm() {
 
             {/* Email */}
             <div className = "flex flex-col gap-1">
-                <label className = "text-sm font-medium text-white-700">Email</label>
+                <label className = "text-sm font-medium text-white">Email</label>
                 <input
                 name = "email"
                 type = "email"
@@ -96,7 +96,7 @@ export default function ProfileForm() {
 
             {/* Location */}
             <div className = "flex flex-col gap-1">
-                <label className = "text-sm font-medium text-white-700"> Location </label>
+                <label className = "text-sm font-medium text-white"> Location </label>
                 <input
                 name = "location"
                 value = {profile.location}
@@ -111,7 +111,7 @@ export default function ProfileForm() {
 
             {/* Bio */}
             <div className = "flex flex-col gap-1">
-                <label className = "text-sm font-medium text-white-700">Bio</label>
+                <label className = "text-sm font-medium text-white">Bio</label>
                 <textarea
                 name = "bio"
                 value = {profile.bio}
