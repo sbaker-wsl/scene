@@ -8,11 +8,24 @@ export default function ProfileForm() {
         email: '',
         location: '',
         bio: '',
+        image: null as File | null,
+        imagePreview: '' as string,
     })
     const [saved, setSaved]  = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setProfile({...profile, [e.target.name]: e.target.value})
+        setSaved(false)
+    }
+
+    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return 
+        setProfile({
+            ...profile,
+            image: file,
+            imagePreview: URL.createObjectURL(file)
+        })
         setSaved(false)
     }
 
@@ -25,6 +38,31 @@ export default function ProfileForm() {
     return (
         <form onSubmit = {handleSubmit} className = "flex flex-col gap-5 w-full max-w-md">
             
+            {/* Profile picture */}
+            <div className = "flex flex-col gap-2 items-center">
+                <div className = "w-24 h-24 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center border-2 border-gray-300">
+                    {profile.imagePreview ? (
+                        <img 
+                        src = {profile.imagePreview}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <span className = "text-3xl text-gray-400">?</span>
+                    )}
+                </div>
+                <label className = "text-sm text-blue-500 hover:text-blue-600 cursor-pointer font-medium">
+                    Change photo
+                    <input
+                    type="file"
+                    accept="image"
+                    onChange={handleImage}
+                    className="hidden"
+                />
+                </label>
+            </div>
+
+            <hr className="border-gray-200" />
             {/* Name */}
             <div className = "flex flex-col gap-1">
                 <label className = "text-sm font-medium text-white-700">Name</label>
@@ -95,7 +133,7 @@ export default function ProfileForm() {
                 >
                 Create Account
                 </button>
-                
+
             </div>
 
             {saved && (

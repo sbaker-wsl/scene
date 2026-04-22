@@ -5,17 +5,11 @@ export default function  AccountPage() {
 		<div className = "flex flex-col items-center gap-6">
 			
 			{/* Header */}
-			<div className = "flex items-center gap-4">
-				<div className = "w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-					<span className = "text-2xl text-gray-400">?</span>
-				</div>
-				<div>
-					<h1 className = "text-xl font-semibold text-white-800"> Your Profile </h1>
-					<p className = "text-sm text-gray-400">Manage your account details </p>
-				</div>
-			</div>
+            <div className = "w-full max-w-md flex justify-center items-center gap-3">
+                <h1 className  = "text-xl font-semibold text-white-800 text-center">Create Your Account</h1>
+            </div>
 
-			<hr className = "border-white-200" />
+            <hr className = "w-full max-w-md border-gray-200" />
 
 			<ProfileForm />
 		</div>
