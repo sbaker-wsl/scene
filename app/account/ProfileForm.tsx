@@ -6,10 +6,9 @@ export default function ProfileForm() {
     const [profile, setProfile] = useState({
         name: '',
         email: '',
+        password: '',
         location: '',
         bio: '',
-        image: null as File | null,
-        imagePreview: '' as string,
     })
     const [saved, setSaved]  = useState(false)
 
@@ -18,51 +17,35 @@ export default function ProfileForm() {
         setSaved(false)
     }
 
-    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (!file) return 
-        setProfile({
-            ...profile,
-            image: file,
-            imagePreview: URL.createObjectURL(file)
-        })
-        setSaved(false)
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        // also add a lot of logic here for handling what signup is doing
         e.preventDefault()
-        // hook up to Clerk + MongoDB later
-        setSaved(true)
+        try {
+            const res = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: profile.name,
+                    email: profile.email,
+                    password: profile.password,
+                    location: profile.location,
+                    bio: profile.bio,
+                })
+            })
+            const data = await res.json()
+            if (!res.ok) {
+                throw new Error(data.error || 'Signup failed')
+            }
+            console.log('Signup response:', data)
+            setSaved(true)
+        } catch (err: any) {
+            console.error(err.message)
+        }
     }
 
     return (
         <form onSubmit = {handleSubmit} className = "flex flex-col gap-5 w-full max-w-md">
-            
-            {/* Profile picture */}
-            <div className = "flex flex-col gap-2 items-center">
-                <div className = "w-24 h-24 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center border-2 border-gray-300">
-                    {profile.imagePreview ? (
-                        <img 
-                        src = {profile.imagePreview}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <span className = "text-3xl text-gray-400">?</span>
-                    )}
-                </div>
-                <label className = "text-sm text-blue-500 hover:text-blue-600 cursor-pointer font-medium">
-                    Change photo
-                    <input
-                    type="file"
-                    accept="image"
-                    onChange={handleImage}
-                    className="hidden"
-                />
-                </label>
-            </div>
 
-            <hr className="border-gray-200" />
             {/* Name */}
             <div className = "flex flex-col gap-1">
                 <label className = "text-sm font-medium text-white">Name</label>
@@ -71,7 +54,7 @@ export default function ProfileForm() {
                 value = {profile.name}
                 onChange = {handleChange}
                 required
-                placeholder = "Your name"
+                placeholder = "Your username"
                 className ="px-4 py-2 border border-gray-300 rounded-lg text-sm
                             focus:outline-none focus:ring-2 focus:ring-blue-500
                             bg-white text-gray-900 placeholder-gray-400"
@@ -88,6 +71,22 @@ export default function ProfileForm() {
                 onChange = {handleChange}
                 required
                 placeholder = "your@email.com"
+                className ="px-4 py-2 border border-gray-300 rounded-lg text-sm
+                            focus:outline-none focus:ring-2 focus:ring-blue-500
+                            bg-white text-gray-900 placeholder-gray-400"
+                />
+            </div>
+
+            {/* Password */}
+            <div className = "flex flex-col gap-1">
+                <label className = "text-sm font-medium text-white">Password</label>
+                <input
+                name = "password"
+                type = "password"
+                value = {profile.password}
+                onChange = {handleChange}
+                required
+                placeholder = "Create a password"
                 className ="px-4 py-2 border border-gray-300 rounded-lg text-sm
                             focus:outline-none focus:ring-2 focus:ring-blue-500
                             bg-white text-gray-900 placeholder-gray-400"
@@ -124,7 +123,7 @@ export default function ProfileForm() {
                 />
             </div>
 
-            {/* Sign out placeholder */}
+            {/* Submit button */}
             <div className = "flex flex-col gap-2 pt-2">
                 <button
                 type = "submit"
