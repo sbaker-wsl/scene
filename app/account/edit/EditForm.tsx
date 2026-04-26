@@ -52,6 +52,7 @@ export default function EditForm() {
             }
 
             setSaved(true)
+            router.replace('/dashboard')
         } catch (err) {
             alert(err || 'Error saving changes')
         }
