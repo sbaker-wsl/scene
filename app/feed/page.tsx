@@ -14,6 +14,15 @@ interface Venue {
   agePolicy: string;
 }
 
+type NewVenueForm = {
+    name: string;
+    location: string;
+    genre: string;
+    capacity: string;
+    rating: string;
+    agePolicy: string;
+};
+
 // ─── Hardcoded data ───────────────────────────────────────────────────────────
 
 const ALL_VENUES: Venue[] = [
@@ -41,6 +50,9 @@ const ALL_VENUES: Venue[] = [
 
 const PAGE_SIZE = 6;
 
+const GENRES: Venue["genre"][] = ["jazz", "rock", "electronic", "hiphop", "indie", "punk", "emo", "alt", "metal", "rap"];
+
+const AGE_POLICIES = ["All ages", "18+", "21+"];
 // ─── Genre badge styles ───────────────────────────────────────────────────────
 
 const GENRE_STYLES: Record<Venue["genre"], string> = {
@@ -55,6 +67,220 @@ const GENRE_STYLES: Record<Venue["genre"], string> = {
     metal:      "bg-slate-100 text-slate-800",
     rap:        "bg-yellow-100 text-yellow-800",
 };
+
+const EMPTY_FORM: NewVenueForm = {
+    name: "",
+    location: "",
+    genre: "",
+    capacity: "",
+    rating: "",
+    agePolicy: "",
+};
+
+// ─── Add Venue Modal ─────────────────────────────────────────────────────────
+
+function AddVenueModal({
+  onClose,
+  onAdd,
+}: {
+  onClose: () => void;
+  onAdd: (venue: Venue) => void;
+}) {
+  const [form, setForm] = useState<NewVenueForm>(EMPTY_FORM);
+  const [errors, setErrors] = useState<Partial<Record<keyof NewVenueForm, string>>>({});
+ 
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+ 
+  function set(field: keyof NewVenueForm, value: string) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+  }
+ 
+  function validate(): boolean {
+    const e: Partial<NewVenueForm> = {};
+    if (!form.name.trim())     e.name     = "Required";
+    if (!form.location.trim()) e.location = "Required";
+    if (!form.genre)           e.genre    = "Required";
+    if (!form.capacity || isNaN(Number(form.capacity))) e.capacity = "Must be a number";
+    if (!form.rating   || isNaN(Number(form.rating)) || Number(form.rating) > 5)
+                               e.rating   = "0 – 5";
+    if (!form.agePolicy)       e.agePolicy = "Required";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+ 
+  function handleSubmit() {
+    if (!validate()) return;
+ 
+    const newVenue: Venue = {
+      // TODO: replace with real MongoDB _id after saving to DB
+      _id:       crypto.randomUUID(),
+      name:      form.name.trim(),
+      location:  form.location.trim(),
+      genre:     form.genre as Venue["genre"],
+      capacity:  Number(form.capacity),
+      rating:    parseFloat(Number(form.rating).toFixed(1)),
+      agePolicy: form.agePolicy,
+    };
+ 
+    // TODO: POST to /api/venues and use the returned document instead
+    // const res = await fetch("/api/venues", { method: "POST", body: JSON.stringify(newVenue) });
+    // const saved = await res.json();
+    // onAdd(saved);
+ 
+    onAdd(newVenue);
+    onClose();
+  }
+ 
+  const inputClass = (field: keyof NewVenueForm) =>
+    `w-full rounded-xl border px-3 py-2 text-sm text-gray-800 outline-none transition-colors
+     ${errors[field] ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50 focus:border-gray-400 focus:bg-white"}`;
+ 
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-gray-300 rounded-3xl shadow-2xl w-full max-w-md"
+        style={{ animation: "modalIn 0.2s ease forwards" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-600">
+          <h2 className="text-lg font-semibold text-gray-900">Add a venue</h2>
+          <button
+            onClick={onClose}
+            className="text-black hover:text-gray-600 transition-colors text-xl leading-none"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+ 
+        {/* Form */}
+        <div className="px-6 py-5 space-y-4">
+ 
+          {/* Name */}
+          <div>
+            <label className="block text-xs font-medium text-black mb-1">Venue name</label>
+            <input
+              type="text"
+              placeholder="e.g. Mr. Smalls"
+              value={form.name}
+              onChange={(e) => set("name", e.target.value)}
+              className={inputClass("name")}
+            />
+            {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+          </div>
+ 
+          {/* Location */}
+          <div>
+            <label className="block text-xs font-medium text-black mb-1">Location</label>
+            <input
+              type="text"
+              placeholder="e.g. Pittsburgh, PA"
+              value={form.location}
+              onChange={(e) => set("location", e.target.value)}
+              className={inputClass("location")}
+            />
+            {errors.location && <p className="text-xs text-red-500 mt-1">{errors.location}</p>}
+            {/* TODO: replace with a real address / map picker */}
+          </div>
+ 
+          {/* Genre */}
+          <div>
+            <label className="block text-xs font-medium text-black mb-1">Genre</label>
+            <select
+              value={form.genre}
+              onChange={(e) => set("genre", e.target.value)}
+              className={inputClass("genre")}
+            >
+              <option value="">Select a genre</option>
+              {GENRES.map((g) => (
+                <option key={g} value={g}>{g}</option>
+              ))}
+            </select>
+            {errors.genre && <p className="text-xs text-red-500 mt-1">{errors.genre}</p>}
+          </div>
+ 
+          {/* Capacity + Rating side by side */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-black mb-1">Capacity</label>
+              <input
+                type="number"
+                placeholder="e.g. 500"
+                value={form.capacity}
+                onChange={(e) => set("capacity", e.target.value)}
+                className={inputClass("capacity")}
+              />
+              {errors.capacity && <p className="text-xs text-red-500 mt-1">{errors.capacity}</p>}
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-black mb-1">Rating (0–5)</label>
+              <input
+                type="number"
+                placeholder="e.g. 4.5"
+                step="0.1"
+                min="0"
+                max="5"
+                value={form.rating}
+                onChange={(e) => set("rating", e.target.value)}
+                className={inputClass("rating")}
+              />
+              {errors.rating && <p className="text-xs text-red-500 mt-1">{errors.rating}</p>}
+            </div>
+          </div>
+ 
+          {/* Age policy */}
+          <div>
+            <label className="block text-xs font-medium text-black mb-1">Age policy</label>
+            <div className="flex gap-2">
+              {AGE_POLICIES.map((policy) => (
+                <button
+                  key={policy}
+                  onClick={() => set("agePolicy", policy)}
+                  className={`
+                    flex-1 rounded-xl py-2 text-sm font-medium border transition-colors
+                    ${form.agePolicy === policy
+                      ? "bg-gray-700 text-white border-gray-900"
+                      : "bg-gray-50 text-gray-600 border-gray-200 hover:border-gray-400"}
+                  `}
+                >
+                  {policy}
+                </button>
+              ))}
+            </div>
+            {errors.agePolicy && <p className="text-xs text-red-500 mt-1">{errors.agePolicy}</p>}
+          </div>
+        </div>
+ 
+        {/* Footer */}
+        <div className="px-6 pb-6 flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 rounded-xl py-2.5 text-sm font-medium border border-gray-600 text-black hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="flex-1 rounded-xl py-2.5 text-sm font-medium bg-gray-700 text-white hover:bg-gray-700 transition-colors"
+          >
+            Add venue
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ─── Venue Modal ──────────────────────────────────────────────────────────────
  
@@ -229,6 +455,8 @@ export default function VenuesPage() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [selected, setSelected] = useState<Venue | null>(null);
+  const [allVenues, setAllVenues] = useState<Venue[]>(ALL_VENUES);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -264,13 +492,26 @@ export default function VenuesPage() {
     return () => observer.disconnect();
   });
 
+  function handleAdd(venue: Venue) {
+    setAllVenues((prev) => [venue, ...prev]);
+    setVenues((prev) => [venue, ...prev]);
+}
+
   return (
     <div className="min-h-screen bg-black px-6 py-10">
       <div className="max-w-4xl mx-auto">
 
         <header className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-2">Music Venues</h1>
-          <p className="text-gray-500">Discover music venues near you — scroll to load more</p>
+          <p className="text-gray-500 mb-4">Discover music venues near you — scroll to load more</p>
+            
+
+            <button
+                onClick={() => setShowAddForm(true)}
+                className="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-700 transition-colors"
+                >
+                <span className= "text-lg leading-none">+</span> Add a venue
+            </button>
         </header>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -296,6 +537,13 @@ export default function VenuesPage() {
 
       {selected && (
         <VenueModal venue={selected} onClose={() => setSelected(null)} />
+      )}
+
+      {showAddForm && (
+        <AddVenueModal
+            onClose={() => setShowAddForm(false)}
+            onAdd={handleAdd}
+        />
       )}
 
       <style>{`
