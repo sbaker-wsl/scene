@@ -1,20 +1,9 @@
-'use client';
 
 import { useEffect } from 'react';
+import { cookies } from 'next/headers';
+import { getUser } from '@/lib/getUser';
 
 export default function TestPage() {
-	useEffect(() => {
-		async function fetchTest() {
-			try {
-				const res = await fetch('/api/users');
-				const data = await res.json();
-				console.log('API response:',data);
-			} catch (err) {
-				console.error('API fetch failed:', err);
-			}
-		}
-		fetchTest();
-	}, []);
-
-	return <div className = "text-white">Check your browser console for API output.</div>;
+	const user = getUser();
+	return <div className = "text-white">{user.username}</div>;
 }

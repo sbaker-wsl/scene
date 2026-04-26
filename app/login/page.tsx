@@ -25,7 +25,7 @@ export default function LoginPage() {
             if (!res.ok) {
                 throw new Error(data.message || 'Login failed')
             }
-            window.location.href = '/app';
+            window.location.href = '/account';
         } catch (err: any) {
             alert('Error logging in: ' + err.message)
             console.error(err.message)
