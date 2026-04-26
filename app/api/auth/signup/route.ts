@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "User already exists" }, { status: 400 });
     }
 
-    const passwordAcceptable = password && password.length >= 6 && password.contains(" ") === false;
+    const passwordAcceptable = password && password.length >= 6;
     if (!passwordAcceptable) {
       return NextResponse.json({ message: "Password must be at least 6 characters, and whitespace is unacceptable" }, { status: 400 });
     }
