@@ -7,7 +7,7 @@ export async function getUser() {
     const token = cookieStore.get('token')?.value
     if (!token) return null
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
 
     const user = await User.findById(decoded.userId).select('-password')
     return user;

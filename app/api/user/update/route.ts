@@ -11,9 +11,9 @@ export async function POST(req: Request) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET)
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
 
-  await User.findByIdAndUpdate(decoded.userId, {
+  await User.findByIdAndUpdate(decoded._id, {
     bio: body.bio,
     location: body.location,
   })
