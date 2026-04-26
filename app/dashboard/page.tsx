@@ -1,16 +1,31 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null)
+  const router = useRouter()
 
   useEffect(() => {
-    fetch('/api/auth/me')
-      .then(res => res.json())
-      .then(data => setUser(data.user))
-  }, [])
+    const loadUser = async () => {
+      try {
+      const res = await fetch('/api/auth/me')
+      const data = await res.json()
+
+      if (!data.user) {
+        router.push('/login')
+        return
+      }
+
+      setUser(data.user)
+    } catch (err) {
+      router.push('/login')
+    }
+  }
+    loadUser()
+  }, [router])
 
   return (
     <div className="text-center text-white">
