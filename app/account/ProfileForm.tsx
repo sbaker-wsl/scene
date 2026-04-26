@@ -34,11 +34,12 @@ export default function ProfileForm() {
             })
             const data = await res.json()
             if (!res.ok) {
-                throw new Error(data.error || 'Signup failed')
+                throw new Error(data.message || 'Signup failed')
             }
-            console.log('Signup response:', data)
+            alert('Account created successfully!')
             setSaved(true)
         } catch (err: any) {
+            alert('Error creating account: ' + err.message)
             console.error(err.message)
         }
     }
