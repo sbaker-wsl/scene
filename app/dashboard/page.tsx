@@ -1,15 +1,19 @@
-
 'use client'
 
-export default async function DashboardPage() {
-    const res = await fetch('/api/auth/me')
-    const data = await res.json()
+import { useEffect, useState } from 'react'
 
-    return (
-        <div className = "text-center">
-            <div className = "text-white">
-                Hello {data.user}!
-            </div>
-        </div>
-    );
+export default function DashboardPage() {
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(res => res.json())
+      .then(data => setUser(data.user))
+  }, [])
+
+  return (
+    <div className="text-center text-white">
+      Hello {user?.name}
+    </div>
+  )
 }
