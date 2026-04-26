@@ -12,6 +12,8 @@ interface Venue {
   capacity: number;
   rating: number;
   agePolicy: string;
+  openingTime: string;
+  closingTime: string;
 }
 
 type NewVenueForm = {
@@ -21,31 +23,33 @@ type NewVenueForm = {
     capacity: string;
     rating: string;
     agePolicy: string;
+    openingTime: string;
+    closingTime: string;
 };
 
 // ─── Hardcoded data ───────────────────────────────────────────────────────────
 
 const ALL_VENUES: Venue[] = [
-  { _id: "1",  name: "The Blue Note",          location: "New York, NY",       genre: "jazz",       capacity: 240,  rating: 4.8, agePolicy: "21+" },
-  { _id: "2",  name: "Fillmore West",          location: "San Francisco, CA",  genre: "rock",       capacity: 1150, rating: 4.9, agePolicy: "All ages" },
-  { _id: "3",  name: "Output",                 location: "Brooklyn, NY",       genre: "electronic", capacity: 600,  rating: 4.7, agePolicy: "21+" },
-  { _id: "4",  name: "Boiler Room",            location: "Los Angeles, CA",    genre: "electronic", capacity: 400,  rating: 4.6, agePolicy: "21+" },
-  { _id: "5",  name: "Jazz at Lincoln Center", location: "New York, NY",       genre: "jazz",       capacity: 1000, rating: 4.9, agePolicy: "All ages" },
-  { _id: "6",  name: "Troubadour",             location: "West Hollywood, CA", genre: "indie",      capacity: 500,  rating: 4.7, agePolicy: "21+" },
-  { _id: "7",  name: "9:30 Club",              location: "Washington, DC",     genre: "rock",       capacity: 1200, rating: 4.9, agePolicy: "All ages" },
-  { _id: "8",  name: "Apollo Theater",         location: "Harlem, NY",         genre: "hiphop",     capacity: 1506, rating: 4.8, agePolicy: "All ages" },
-  { _id: "9",  name: "Terminal 5",             location: "New York, NY",       genre: "rock",       capacity: 3000, rating: 4.5, agePolicy: "21+" },
-  { _id: "10", name: "The Roxy",               location: "Atlanta, GA",        genre: "indie",      capacity: 1000, rating: 4.6, agePolicy: "All ages" },
-  { _id: "11", name: "Stubb's",                location: "Austin, TX",         genre: "rock",       capacity: 2600, rating: 4.8, agePolicy: "All ages" },
-  { _id: "12", name: "Rex Club",               location: "Paris, FR",          genre: "electronic", capacity: 600,  rating: 4.7, agePolicy: "18+" },
-  { _id: "13", name: "The Catalyst",           location: "Santa Cruz, CA",     genre: "indie",      capacity: 750,  rating: 4.5, agePolicy: "All ages" },
-  { _id: "14", name: "House of Blues",         location: "Chicago, IL",        genre: "jazz",       capacity: 1400, rating: 4.6, agePolicy: "21+" },
-  { _id: "15", name: "Vinyl",                  location: "Atlanta, GA",        genre: "hiphop",     capacity: 300,  rating: 4.7, agePolicy: "21+" },
-  { _id: "16", name: "El Rey Theatre",         location: "Los Angeles, CA",    genre: "indie",      capacity: 770,  rating: 4.6, agePolicy: "All ages" },
-  { _id: "17", name: "Gramercy Theatre",       location: "New York, NY",       genre: "rock",       capacity: 900,  rating: 4.5, agePolicy: "All ages" },
-  { _id: "18", name: "Echoplex",               location: "Los Angeles, CA",    genre: "electronic", capacity: 500,  rating: 4.4, agePolicy: "21+" },
-  { _id: "19", name: "City Winery",            location: "Nashville, TN",      genre: "jazz",       capacity: 300,  rating: 4.8, agePolicy: "21+" },
-  { _id: "20", name: "Revolution Live",        location: "Fort Lauderdale, FL",genre: "rock",       capacity: 1700, rating: 4.6, agePolicy: "18+" },
+  { _id: "1",  name: "The Blue Note",          location: "New York, NY",        genre: "jazz",       capacity: 240,  rating: 4.8, agePolicy: "21+",      openingTime: "20:00", closingTime: "02:00" },
+  { _id: "2",  name: "Fillmore West",          location: "San Francisco, CA",   genre: "rock",       capacity: 1150, rating: 4.9, agePolicy: "All ages", openingTime: "19:00", closingTime: "23:00" },
+  { _id: "3",  name: "Output",                 location: "Brooklyn, NY",        genre: "electronic", capacity: 600,  rating: 4.7, agePolicy: "21+",      openingTime: "22:00", closingTime: "04:00" },
+  { _id: "4",  name: "Boiler Room",            location: "Los Angeles, CA",     genre: "electronic", capacity: 400,  rating: 4.6, agePolicy: "21+",      openingTime: "22:00", closingTime: "04:00" },
+  { _id: "5",  name: "Jazz at Lincoln Center", location: "New York, NY",        genre: "jazz",       capacity: 1000, rating: 4.9, agePolicy: "All ages", openingTime: "19:30", closingTime: "23:00" },
+  { _id: "6",  name: "Troubadour",             location: "West Hollywood, CA",  genre: "indie",      capacity: 500,  rating: 4.7, agePolicy: "21+",      openingTime: "19:00", closingTime: "02:00" },
+  { _id: "7",  name: "9:30 Club",              location: "Washington, DC",      genre: "rock",       capacity: 1200, rating: 4.9, agePolicy: "All ages", openingTime: "19:00", closingTime: "23:00" },
+  { _id: "8",  name: "Apollo Theater",         location: "Harlem, NY",          genre: "hiphop",     capacity: 1506, rating: 4.8, agePolicy: "All ages", openingTime: "18:00", closingTime: "23:00" },
+  { _id: "9",  name: "Terminal 5",             location: "New York, NY",        genre: "rock",       capacity: 3000, rating: 4.5, agePolicy: "21+",      openingTime: "19:00", closingTime: "02:00" },
+  { _id: "10", name: "The Roxy",               location: "Atlanta, GA",         genre: "indie",      capacity: 1000, rating: 4.6, agePolicy: "All ages", openingTime: "20:00", closingTime: "02:00" },
+  { _id: "11", name: "Stubb's",                location: "Austin, TX",          genre: "rock",       capacity: 2600, rating: 4.8, agePolicy: "All ages", openingTime: "18:00", closingTime: "23:00" },
+  { _id: "12", name: "Rex Club",               location: "Paris, FR",           genre: "electronic", capacity: 600,  rating: 4.7, agePolicy: "18+",      openingTime: "23:00", closingTime: "06:00" },
+  { _id: "13", name: "The Catalyst",           location: "Santa Cruz, CA",      genre: "indie",      capacity: 750,  rating: 4.5, agePolicy: "All ages", openingTime: "19:00", closingTime: "23:00" },
+  { _id: "14", name: "House of Blues",         location: "Chicago, IL",         genre: "jazz",       capacity: 1400, rating: 4.6, agePolicy: "21+",      openingTime: "19:00", closingTime: "02:00" },
+  { _id: "15", name: "Vinyl",                  location: "Atlanta, GA",         genre: "hiphop",     capacity: 300,  rating: 4.7, agePolicy: "21+",      openingTime: "21:00", closingTime: "03:00" },
+  { _id: "16", name: "El Rey Theatre",         location: "Los Angeles, CA",     genre: "indie",      capacity: 770,  rating: 4.6, agePolicy: "All ages", openingTime: "19:00", closingTime: "23:00" },
+  { _id: "17", name: "Gramercy Theatre",       location: "New York, NY",        genre: "rock",       capacity: 900,  rating: 4.5, agePolicy: "All ages", openingTime: "19:00", closingTime: "23:00" },
+  { _id: "18", name: "Echoplex",               location: "Los Angeles, CA",     genre: "electronic", capacity: 500,  rating: 4.4, agePolicy: "21+",      openingTime: "21:00", closingTime: "02:00" },
+  { _id: "19", name: "City Winery",            location: "Nashville, TN",       genre: "jazz",       capacity: 300,  rating: 4.8, agePolicy: "21+",      openingTime: "17:00", closingTime: "23:00" },
+  { _id: "20", name: "Revolution Live",        location: "Fort Lauderdale, FL", genre: "rock",       capacity: 1700, rating: 4.6, agePolicy: "18+",      openingTime: "19:00", closingTime: "02:00" },
 ];
 
 const PAGE_SIZE = 6;
@@ -75,6 +79,8 @@ const EMPTY_FORM: NewVenueForm = {
     capacity: "",
     rating: "",
     agePolicy: "",
+    openingTime: "",
+    closingTime: "",
 };
 
 // ─── Add Venue Modal ─────────────────────────────────────────────────────────
@@ -82,11 +88,24 @@ const EMPTY_FORM: NewVenueForm = {
 function AddVenueModal({
   onClose,
   onAdd,
+  initialVenue,
 }: {
   onClose: () => void;
   onAdd: (venue: Venue) => void;
+  initialVenue?: Venue;
 }) {
-  const [form, setForm] = useState<NewVenueForm>(EMPTY_FORM);
+  const [form, setForm] = useState<NewVenueForm>(initialVenue ? {
+    name: initialVenue.name,
+    location: initialVenue.location,
+    genre: initialVenue.genre,
+    capacity: String(initialVenue.capacity),
+    rating: String(initialVenue.rating),
+    agePolicy: initialVenue.agePolicy,
+    openingTime: initialVenue.openingTime,
+    closingTime: initialVenue.closingTime,
+  } 
+  : EMPTY_FORM);
+
   const [errors, setErrors] = useState<Partial<Record<keyof NewVenueForm, string>>>({});
  
   useEffect(() => {
@@ -117,16 +136,18 @@ function AddVenueModal({
  
   function handleSubmit() {
     if (!validate()) return;
- 
+  
     const newVenue: Venue = {
       // TODO: replace with real MongoDB _id after saving to DB
-      _id:       crypto.randomUUID(),
+      _id: initialVenue?._id ??      crypto.randomUUID(),
       name:      form.name.trim(),
       location:  form.location.trim(),
       genre:     form.genre as Venue["genre"],
       capacity:  Number(form.capacity),
       rating:    parseFloat(Number(form.rating).toFixed(1)),
       agePolicy: form.agePolicy,
+      openingTime: form.openingTime,
+      closingTime: form.closingTime,
     };
  
     // TODO: POST to /api/venues and use the returned document instead
@@ -238,7 +259,29 @@ function AddVenueModal({
               {errors.rating && <p className="text-xs text-red-500 mt-1">{errors.rating}</p>}
             </div>
           </div>
- 
+
+            
+          <div className = "grid grid-cols-2 gap-3">
+            <div>
+                <label className = "block text-xs font-medium text-black mb-1">Opening time</label>
+                <input
+                type = "time"
+                value = {form.openingTime}
+                onChange = {(e) => set("openingTime", e.target.value)}
+                className = {inputClass("openingTime")}
+                />
+            </div> 
+            <div>
+                <label className = "block text-xs font-medium text-black mb-1">Closing time</label>
+                <input
+                type = "time"
+                value = {form.closingTime}
+                onChange = {(e) => set("closingTime", e.target.value)}
+                className = {inputClass("closingTime")}
+                />
+            </div>
+        </div>
+
           {/* Age policy */}
           <div>
             <label className="block text-xs font-medium text-black mb-1">Age policy</label>
@@ -284,7 +327,7 @@ function AddVenueModal({
 
 // ─── Venue Modal ──────────────────────────────────────────────────────────────
  
-function VenueModal({ venue, onClose }: { venue: Venue; onClose: () => void }) {
+function VenueModal({ venue, onClose, onEdit }: { venue: Venue; onClose: () => void; onEdit: () => void }) {
   // Close on Escape key
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -361,14 +404,15 @@ function VenueModal({ venue, onClose }: { venue: Venue; onClose: () => void }) {
             >
               ✕
             </button>
-          </div>
+        </div>
  
           {/* Stats row */}
-          <div className="grid grid-cols-3 gap-3 mb-5">
+          <div className="grid grid-cols-4 gap-3 mb-5">
             {[
               { label: "Capacity",   value: venue.capacity.toLocaleString() },
               { label: "Rating",     value: `★ ${venue.rating.toFixed(1)}` },
               { label: "Age policy", value: venue.agePolicy },
+              { label: "Hours",      value: `${venue.openingTime} - ${venue.closingTime}` },
             ].map(({ label, value }) => (
               <div key={label} className="bg-gray-200 rounded-xl p-3 text-center border border-gray-100">
                 <p className="text-xs text-black mb-1">{label}</p>
@@ -391,9 +435,16 @@ function VenueModal({ venue, onClose }: { venue: Venue; onClose: () => void }) {
           </div>
  
           {/* CTA */}
-          <button className="w-full bg-black text-white rounded-xl py-3 text-sm font-medium hover:bg-gray-700 transition-colors">
-            Get directions
-          </button>
+          <div className = "flex gap-3">
+            <button
+                onClick = {onEdit}
+                className = "flex-1 rounded-xl py-3 text-sm font-medium border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+            > Edit Venue 
+            </button>
+            <button className="w-full bg-black text-white rounded-xl py-3 text-sm font-medium hover:bg-gray-700 transition-colors">
+                Get directions
+            </button>
+            </div>
         </div>
       </div>
     </div>
@@ -402,7 +453,7 @@ function VenueModal({ venue, onClose }: { venue: Venue; onClose: () => void }) {
 
 // ─── VenueCard ────────────────────────────────────────────────────────────────
 
-function VenueCard({ venue, animationDelay, onClick }: { venue: Venue; animationDelay: number; onClick: () => void }) {
+function VenueCard({ venue, animationDelay, onClick, onDelete }: { venue: Venue; animationDelay: number; onClick: () => void; onDelete: (e: React.MouseEvent) => void }) {
   return (
     <div
       onClick={onClick}
@@ -417,6 +468,14 @@ function VenueCard({ venue, animationDelay, onClick }: { venue: Venue; animation
         transition-all duration-200 cursor-pointer
       "
     >
+        <button 
+            onClick = {onDelete}
+            className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full text-gray-300 hover:bg-red-50 hover:text-red-400 transition-colors text-sm"
+            aria-label="Delete venue"
+        >
+            ✕
+        </button>
+
       <span className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full mb-3 ${GENRE_STYLES[venue.genre]}`}>
         {venue.genre}
       </span>
@@ -426,6 +485,7 @@ function VenueCard({ venue, animationDelay, onClick }: { venue: Venue; animation
         <span>Cap. {venue.capacity.toLocaleString()}</span>
         <span>★ {venue.rating.toFixed(1)}</span>
         <span>{venue.agePolicy}</span>
+        <span>{venue.openingTime} - {venue.closingTime}</span>
       </div>
     </div>
   );
@@ -457,6 +517,7 @@ export default function VenuesPage() {
   const [selected, setSelected] = useState<Venue | null>(null);
   const [allVenues, setAllVenues] = useState<Venue[]>(ALL_VENUES);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingVenue, setEditingVenue] = useState<Venue | null>(null);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -521,6 +582,12 @@ export default function VenuesPage() {
               venue={venue}
               animationDelay={(i % PAGE_SIZE) * 60}
               onClick={() => setSelected(venue)}
+              onDelete = {(e) => {
+                e.stopPropagation();
+                setAllVenues((prev) => prev.filter((v) => v._id !== venue._id));
+                setVenues((prev) => prev.filter((v) => v._id !== venue._id));
+                // TODO: DELETE /api/venues/${venue._id}
+            }}
             />
           ))}
         </div>
@@ -536,7 +603,26 @@ export default function VenuesPage() {
       </div>
 
       {selected && (
-        <VenueModal venue={selected} onClose={() => setSelected(null)} />
+        <VenueModal 
+            venue={selected} 
+            onClose={() => setSelected(null)} 
+            onEdit={() => {
+                setEditingVenue(selected)
+                setSelected(null);
+            }}
+        />
+      )}
+
+      {editingVenue && (
+        <AddVenueModal
+            initialVenue={editingVenue}
+            onClose={() => setEditingVenue(null)}
+            onAdd = {(updated) => {
+                setAllVenues((prev) => prev.map((v) => v._id === updated._id ? updated : v));
+                setVenues((prev) => prev.map((v) => v._id === updated._id ? updated : v));
+                setEditingVenue(null);
+            }}
+        />
       )}
 
       {showAddForm && (
