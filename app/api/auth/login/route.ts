@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         else {
             const token = signToken({ userId: user._id });
             const res = NextResponse.json({ message: "Login successful" }, { status: 200 });
-            res.cookies.set('token', token, { httpOnly: true, secure: true, sameSite: 'strict', path: '/test', maxAge: 60 * 60 * 24 });
+            res.cookies.set('token', token, { httpOnly: true, secure: true, sameSite: 'strict', path: '@app/test', maxAge: 60 * 60 * 24 });
             return res;
         }
     } catch (err: any) {
