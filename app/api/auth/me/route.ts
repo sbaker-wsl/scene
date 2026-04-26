@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 import User from '@/models/User'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
@@ -8,7 +9,7 @@ export async function GET() {
     const token = tokenStore.get('token')?.value
 
     if (!token) {
-      return Response.json({ user: null }, { status: 401 })
+      return NextResponse.json({ user: null }, { status: 401 })
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
@@ -16,12 +17,12 @@ export async function GET() {
     const user = await User.findById(decoded.userId).select('-password')
 
     if (!user) {
-      return Response.json({ user: null }, { status: 401 })
+      return NextResponse.json({ user: null }, { status: 401 })
     }
 
-    return Response.json({ user })
+    return NextResponse.json({ user })
 
   } catch {
-    return Response.json({ user: null }, { status: 401 })
+    return NextResponse.json({ user: null }, { status: 401 })
   }
 }
