@@ -1,11 +1,14 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function HomePage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false)
 
   const handleProfileClick = async () => {
     try {
+      setLoading(true)
       const res = await fetch('/api/auth/me');
       const data = await res.json();
 
@@ -18,6 +21,14 @@ export default function HomePage() {
       alert(err || 'Error checking authentication');
       router.push('/login');
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="text-white text-center">
+        Loading...
+      </div>
+    )
   }
 
   return (
