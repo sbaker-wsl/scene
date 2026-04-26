@@ -29,6 +29,13 @@ export default function DashboardPage() {
     loadUser()
   }, [router])
 
+  const handleLogout = async () => {
+    await fetch('api/auth/logout', {
+      method: 'POST',
+    })
+    router.replace('/login')
+  }
+
   // make this look nicer
   if (loading) {
     return (
@@ -49,6 +56,12 @@ export default function DashboardPage() {
     >
       Edit Profile
     </Link>
+    <button
+        onClick={handleLogout}
+        className="block mx-auto mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+      >
+        Sign Out
+      </button>
     </div>
   )
 }
