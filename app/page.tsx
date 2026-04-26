@@ -12,7 +12,7 @@ export default function HomePage() {
       if (data.user) {
         router.push('/dashboard');
       } else {
-        router.push('/login');
+        router.replace('/login');
       }
     } catch (err) {
       alert(err || 'Error checking authentication');

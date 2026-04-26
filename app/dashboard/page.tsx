@@ -7,6 +7,7 @@ import Link from 'next/link'
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null)
   const router = useRouter()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadUser = async () => {
@@ -15,17 +16,27 @@ export default function DashboardPage() {
       const data = await res.json()
 
       if (!data.user) {
-        router.push('/login')
+        router.replace('/login')
         return
       }
 
       setUser(data.user)
+      setLoading(false);
     } catch (err) {
       router.push('/login')
     }
   }
     loadUser()
   }, [router])
+
+  // make this look nicer
+  if (loading) {
+    return (
+      <div className="text-white text-center">
+        Loading...
+      </div>
+    )
+  }
 
   return (
     <div className="text-center text-white">
