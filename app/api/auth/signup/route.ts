@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const { username, email, password, location, bio } = await request.json();
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: email });
     if (existingUser) {
       return NextResponse.json({ message: "User already exists" }, { status: 400 });
     }
