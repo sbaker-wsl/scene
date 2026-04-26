@@ -51,7 +51,7 @@ export default function ProfileForm() {
             <div className = "flex flex-col gap-1">
                 <label className = "text-sm font-medium text-white">Name</label>
                 <input
-                name = "name"
+                name = "username"
                 value = {profile.name}
                 onChange = {handleChange}
                 required

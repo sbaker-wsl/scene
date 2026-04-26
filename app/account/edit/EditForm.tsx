@@ -58,14 +58,26 @@ export default function EditForm() {
         }
     }
 
-     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full max-w-md">
+    /*
+    const handleBack = async (e: React.FormEvent) {
 
-             <hr className="border-gray-200" />
+    }
+    */
+
+     return (
+        <form
+            onSubmit={handleSubmit}
+            className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl shadow-xl p-6 space-y-6"
+            >
+            {/* Header */}
+            <div className="text-center">
+                <h2 className="text-xl font-semibold text-white">Edit Profile</h2>
+                <p className="text-sm text-gray-400">Update your personal info</p>
+            </div>
 
             {/* Bio */}
-            <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-white">Bio</label>
+            <div className="flex flex-col gap-2">
+                <label className="text-sm text-gray-400">Bio</label>
                 <textarea
                 name="bio"
                 value={profile.bio}
@@ -73,42 +85,45 @@ export default function EditForm() {
                 placeholder="Tell us a little about yourself..."
                 rows={4}
                 required
-                className="px-4 py-2 border border-gray-300 rounded-lg text-sm
-                            focus:outline-none focus:ring-2 focus:ring-blue-500
-                            bg-white text-gray-900 placeholder-gray-400 resize-none"
+                className="px-4 py-3 rounded-xl text-sm bg-gray-800 text-white
+                            placeholder-gray-500 border border-gray-700
+                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                            transition resize-none"
                 />
             </div>
 
             {/* Location */}
-            <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-white">Location</label>
+            <div className="flex flex-col gap-2">
+                <label className="text-sm text-gray-400">Location</label>
                 <input
                 name="location"
                 value={profile.location}
                 onChange={handleChange}
                 placeholder="City, Country"
                 required
-                className="px-4 py-2 border border-gray-300 rounded-lg text-sm
-                            focus:outline-none focus:ring-2 focus:ring-blue-500
-                            bg-white text-gray-900 placeholder-gray-400"
+                className="px-4 py-3 rounded-xl text-sm bg-gray-800 text-white
+                            placeholder-gray-500 border border-gray-700
+                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                            transition"
                 />
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-col gap-2 pt-2">
-                <button
+            {/* Save Button */}
+            <button
                 type="submit"
-                className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white
-                            text-sm font-medium rounded-lg transition-colors"
-                >
+                className="w-full py-3 rounded-xl font-medium text-white
+                        bg-blue-600 hover:bg-blue-700
+                        transition-all duration-200 shadow-md hover:shadow-lg"
+            >
                 Save Changes
-                </button>
-            </div>
+            </button>
 
+            {/* Success Message */}
             {saved && (
-                <p className="text-sm text-green-500 text-center">Changes saved!</p>
+                <p className="text-sm text-green-400 text-center animate-fade-in">
+                Changes saved successfully!
+                </p>
             )}
-
         </form>
     )
 }
