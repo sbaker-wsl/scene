@@ -10,9 +10,26 @@ export default function LoginPage() {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        // hook up to Clerk later
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email: form.email,
+                    password: form.password,
+                })
+            })
+            const data = await res.json()
+            if (!res.ok) {
+                throw new Error(data.message || 'Login failed')
+            }
+            window.location.href = '/app';
+        } catch (err: any) {
+            alert('Error logging in: ' + err.message)
+            console.error(err.message)
+        }
     }
 
     return (
