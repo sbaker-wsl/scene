@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function EditForm() {
     const [profile, setProfile] = useState ({
@@ -10,15 +11,50 @@ export default function EditForm() {
 
     const [saved, setSaved] = useState(false)
 
+    const router = useRouter()
+
+    useEffect(() => {
+        const loadUser = async () => {
+            const res = await fetch('/api/user/me')
+            const data = await res.json()
+
+            if (!data.user) {
+                router.push('/login')
+                return
+            }
+
+            setProfile({
+                bio: data.user.bio || '',
+                location: data.user.location || '',
+            })
+        }
+
+        loadUser()
+    }, [router])
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setProfile({...profile, [e.target.name]: e.target.value})
         setSaved(false)
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        //save to MongoDB later
-        setSaved(true)
+        
+        try {
+            const res = await fetch('/api/user/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(profile)
+            })
+            
+            if (!res.ok) {
+                throw new Error('Failed to save changes')
+            }
+
+            setSaved(true)
+        } catch (err) {
+            alert(err || 'Error saving changes')
+        }
     }
 
      return (

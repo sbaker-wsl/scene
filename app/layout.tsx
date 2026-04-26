@@ -42,7 +42,7 @@ export default function RootLayout({
           <Link href="/search" className="text-white hover:text-gray-900 text-sm font-medium">
             Search
           </Link>
-          <Link href="/account/edit" className="text-white hover:text-gray-900 text-sm font-medium">
+          <Link href="/dashboard" className="text-white hover:text-gray-900 text-sm font-medium">
             Account
           </Link>
         </nav>

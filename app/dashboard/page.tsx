@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null)
@@ -13,7 +14,15 @@ export default function DashboardPage() {
 
   return (
     <div className="text-center text-white">
-      Hello {user?.name}
+      Hello {user?.username}
+      Location {user?.location || 'Unknown'}
+      Bio {user?.bio || 'No bio set'}
+    <Link
+      href="/account/edit"
+      className="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+    >
+      Edit Profile
+    </Link>
     </div>
   )
 }
