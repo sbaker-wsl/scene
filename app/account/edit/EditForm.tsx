@@ -1,66 +1,64 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function EditForm() {
     const [profile, setProfile] = useState ({
         bio: '',
         location: '',
-        image: null as File | null,
-        imagePreview: '' as string,
     })
 
     const [saved, setSaved] = useState(false)
+
+    const router = useRouter()
+
+    useEffect(() => {
+        const loadUser = async () => {
+            const res = await fetch('/api/user/me')
+            const data = await res.json()
+
+            if (!data.user) {
+                router.push('/login')
+                return
+            }
+
+            setProfile({
+                bio: data.user.bio || '',
+                location: data.user.location || '',
+            })
+        }
+
+        loadUser()
+    }, [router])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setProfile({...profile, [e.target.name]: e.target.value})
         setSaved(false)
     }
 
-    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (!file) return
-        setProfile ({
-            ...profile,
-            image: file,
-            imagePreview: URL.createObjectURL(file)
-        })
-        setSaved(false)
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        //save to MongoDB later
-        setSaved(true)
+        
+        try {
+            const res = await fetch('/api/user/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(profile)
+            })
+            
+            if (!res.ok) {
+                throw new Error('Failed to save changes')
+            }
+
+            setSaved(true)
+        } catch (err) {
+            alert(err || 'Error saving changes')
+        }
     }
 
      return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full max-w-md">
-
-            {/* Profile picture */}
-            <div className="flex flex-col gap-2 items-center">
-                <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden flex
-                                items-center justify-center border-2 border-gray-300">
-                {profile.imagePreview ? (
-                    <img
-                    src={profile.imagePreview}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                    />
-                ) : (
-                    <span className="text-3xl text-gray-400">?</span>
-                )}
-                </div>
-                <label className="text-sm text-blue-500 hover:text-blue-600 cursor-pointer font-medium">
-                    Change photo
-                    <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImage}
-                    className="hidden"
-                />
-                </label>
-            </div>
 
              <hr className="border-gray-200" />
 

@@ -10,6 +10,12 @@ export async function POST(request: Request) {
 
     const { username, email, password, location, bio } = await request.json();
 
+    // Check if email is valid format
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!isValidEmail) {
+      return NextResponse.json({ message: "Invalid email format" }, { status: 400 });
+    }
+    
     // Check if user already exists
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -20,8 +26,6 @@ export async function POST(request: Request) {
     if (!passwordAcceptable) {
       return NextResponse.json({ message: "Password must be at least 6 characters, and whitespace is unacceptable" }, { status: 400 });
     }
-
-    // add logic for email handling!
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -34,6 +38,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ message: "User created successfully", user }, { status: 201 });
+    
 } catch (error) {
     console.error("Error in signup route:", error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
