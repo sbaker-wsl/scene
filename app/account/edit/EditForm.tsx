@@ -67,7 +67,7 @@ export default function EditForm() {
      return (
         <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md bg-gray-950 border border-gray-800 rounded-2xl shadow-xl p-6 space-y-6"
+            className="w-full max-w-md border border-gray-800 rounded-2xl shadow-xl p-6 space-y-6 bg-gray-900"
             >
             {/* Header */}
             <div className="text-center">
