@@ -9,13 +9,15 @@ export default function EditForm() {
         location: '',
     })
 
+    const [loading, setLoading ] = useState(true) 
+
     const [saved, setSaved] = useState(false)
 
     const router = useRouter()
 
     useEffect(() => {
         const loadUser = async () => {
-            const res = await fetch('/api/user/me')
+            const res = await fetch('/api/auth/me')
             const data = await res.json()
 
             if (!data.user) {
@@ -27,6 +29,8 @@ export default function EditForm() {
                 bio: data.user.bio || '',
                 location: data.user.location || '',
             })
+
+            setLoading(false)
         }
 
         loadUser()
@@ -52,19 +56,76 @@ export default function EditForm() {
             }
 
             setSaved(true)
+            router.replace('/dashboard')
         } catch (err) {
             alert(err || 'Error saving changes')
         }
     }
 
-     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full max-w-md">
+    if (loading) {
+        return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-950">
+      <div className="flex flex-col items-center gap-6">
+        
+        {/* Animated SVG Spinner */}
+        <div className="w-16 h-16">
+          <svg
+            className="animate-spin"
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+              className="text-gray-700"
+            />
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray="90 150"
+              strokeDashoffset="0"
+              className="text-blue-500"
+            />
+          </svg>
+        </div>
 
-             <hr className="border-gray-200" />
+        {/* Text */}
+        <div className="text-center">
+          <p className="text-white text-lg font-medium tracking-wide">
+            Loading your account
+          </p>
+          <p className="text-gray-400 text-sm mt-1">
+            Just a moment...
+          </p>
+        </div>
+
+      </div>
+    </div>
+    )
+  }
+
+     return (
+        <form
+            onSubmit={handleSubmit}
+            className="w-full max-w-md border border-gray-800 rounded-2xl shadow-xl p-6 space-y-6 bg-gray-900"
+            >
+            {/* Header */}
+            <div className="text-center">
+                <h2 className="text-xl font-semibold text-white">Edit Profile</h2>
+                <p className="text-sm text-gray-400">Update your personal info</p>
+            </div>
 
             {/* Bio */}
-            <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-white">Bio</label>
+            <div className="flex flex-col gap-2">
+                <label className="text-sm text-gray-400">Bio</label>
                 <textarea
                 name="bio"
                 value={profile.bio}
@@ -72,42 +133,45 @@ export default function EditForm() {
                 placeholder="Tell us a little about yourself..."
                 rows={4}
                 required
-                className="px-4 py-2 border border-gray-300 rounded-lg text-sm
-                            focus:outline-none focus:ring-2 focus:ring-blue-500
-                            bg-white text-gray-900 placeholder-gray-400 resize-none"
+                className="px-4 py-3 rounded-xl text-sm bg-gray-800 text-white
+                            placeholder-gray-500 border border-gray-700
+                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                            transition resize-none"
                 />
             </div>
 
             {/* Location */}
-            <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-white">Location</label>
+            <div className="flex flex-col gap-2">
+                <label className="text-sm text-gray-400">Location</label>
                 <input
                 name="location"
                 value={profile.location}
                 onChange={handleChange}
                 placeholder="City, Country"
                 required
-                className="px-4 py-2 border border-gray-300 rounded-lg text-sm
-                            focus:outline-none focus:ring-2 focus:ring-blue-500
-                            bg-white text-gray-900 placeholder-gray-400"
+                className="px-4 py-3 rounded-xl text-sm bg-gray-800 text-white
+                            placeholder-gray-500 border border-gray-700
+                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                            transition"
                 />
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-col gap-2 pt-2">
-                <button
+            {/* Save Button */}
+            <button
                 type="submit"
-                className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white
-                            text-sm font-medium rounded-lg transition-colors"
-                >
+                className="w-full py-3 rounded-xl font-medium text-white
+                        bg-blue-600 hover:bg-blue-700
+                        transition-all duration-200 shadow-md hover:shadow-lg"
+            >
                 Save Changes
-                </button>
-            </div>
+            </button>
 
+            {/* Success Message */}
             {saved && (
-                <p className="text-sm text-green-500 text-center">Changes saved!</p>
+                <p className="text-sm text-green-400 text-center animate-fade-in">
+                Changes saved successfully!
+                </p>
             )}
-
         </form>
     )
 }

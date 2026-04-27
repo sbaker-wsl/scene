@@ -1,8 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function ProfileForm() {
+
+    const router = useRouter();
+
     const [profile, setProfile] = useState({
         name: '',
         email: '',
@@ -38,6 +42,7 @@ export default function ProfileForm() {
             }
             alert('Account created successfully!')
             setSaved(true)
+            router.push('/login')
         } catch (err: any) {
             alert('Error creating account: ' + err.message)
             console.error(err.message)
@@ -49,7 +54,7 @@ export default function ProfileForm() {
 
             {/* Name */}
             <div className = "flex flex-col gap-1">
-                <label className = "text-sm font-medium text-white">Name</label>
+                <label className = "text-sm font-medium text-white">Username</label>
                 <input
                 name = "name"
                 value = {profile.name}

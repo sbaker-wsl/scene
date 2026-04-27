@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
 
-  await User.findByIdAndUpdate(decoded._id, {
+  await User.findByIdAndUpdate(decoded.userId, {
     bio: body.bio,
     location: body.location,
   })
