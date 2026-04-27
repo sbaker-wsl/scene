@@ -1,8 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function ProfileForm() {
+
+    const router = useRouter();
+
     const [profile, setProfile] = useState({
         name: '',
         email: '',
@@ -38,6 +42,7 @@ export default function ProfileForm() {
             }
             alert('Account created successfully!')
             setSaved(true)
+            router.push('/login')
         } catch (err: any) {
             alert('Error creating account: ' + err.message)
             console.error(err.message)
