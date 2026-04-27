@@ -17,7 +17,7 @@ export default function EditForm() {
 
     useEffect(() => {
         const loadUser = async () => {
-            const res = await fetch('/api/user/me')
+            const res = await fetch('/api/auth/me')
             const data = await res.json()
 
             if (!data.user) {
