@@ -156,6 +156,7 @@ interface Artist {
   name:   string
   genre:  string
   origin: string
+  image?:  string
 }
 
 interface Performance {
@@ -185,17 +186,17 @@ const ALL_VENUES: Venue[] = [
 ]
 
 const ALL_ARTISTS: Artist[] = [
-  { _id: "a1",  name: "Miles Davis",         genre: "jazz",       origin: "Alton, IL" },
-  { _id: "a2",  name: "Radiohead",           genre: "alt",        origin: "Abingdon, UK" },
-  { _id: "a3",  name: "Daft Punk",           genre: "electronic", origin: "Paris, FR" },
-  { _id: "a4",  name: "Kendrick Lamar",      genre: "rap",        origin: "Compton, CA" },
-  { _id: "a5",  name: "The Strokes",         genre: "indie",      origin: "New York, NY" },
-  { _id: "a6",  name: "Black Sabbath",       genre: "metal",      origin: "Birmingham, UK" },
-  { _id: "a7",  name: "Coltrane",            genre: "jazz",       origin: "Hamlet, NC" },
-  { _id: "a8",  name: "Aphex Twin",          genre: "electronic", origin: "Limerick, IE" },
+  { _id: "a1",  name: "Miles Davis",         genre: "jazz",       origin: "Alton, IL", image: "miles_davis.jpg" },
+  { _id: "a2",  name: "Radiohead",           genre: "alt",        origin: "Abingdon, UK", image: "radiohead.jpg" },
+  { _id: "a3",  name: "Daft Punk",           genre: "electronic", origin: "Paris, FR", image: "daft_punk.jpg" },
+  { _id: "a4",  name: "Kendrick Lamar",      genre: "rap",        origin: "Compton, CA", image: "kendrick_lamar.jpg" },
+  { _id: "a5",  name: "The Strokes",         genre: "indie",      origin: "New York, NY", image: "the_strokes.jpg" },
+  { _id: "a6",  name: "Black Sabbath",       genre: "metal",      origin: "Birmingham, UK", image: "black_sabbath.jpg" },
+  { _id: "a7",  name: "Coltrane",            genre: "jazz",       origin: "Hamlet, NC"},
+  { _id: "a8",  name: "Aphex Twin",          genre: "electronic", origin: "Limerick, IE"},
   { _id: "a9",  name: "Arctic Monkeys",      genre: "indie",      origin: "Sheffield, UK" },
   { _id: "a10", name: "Run The Jewels",      genre: "rap",        origin: "Atlanta, GA" },
-  { _id: "a11", name: "My Chemical Romance", genre: "emo",        origin: "Newark, NJ" },
+  { _id: "a11", name: "My Chemical Romance", genre: "emo",        origin: "Newark, NJ"},
   { _id: "a12", name: "Metallica",           genre: "metal",      origin: "San Francisco, CA" },
 ]
 
@@ -436,10 +437,18 @@ function ArtistCard({ artist, onClick }: { artist: Artist; onClick: () => void }
                  transition-all duration-200 shrink-0"
     >
       {/* Avatar circle */}
-      <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mb-3">
-        <span className="text-sm font-semibold text-white">
-          {artist.name.charAt(0)}
-        </span>
+      <div className="w-full h-32 rounded-xl overflow-hidden mb-3">
+          {artist.image ? (
+            <img
+              src={artist.image}
+              alt={artist.name}
+              className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-zinc-700 flex items-center justify-center">
+            <span className="text-sm font-semibold text-white">{artist.name.charAt(0)}</span>
+          </div>
+        )}
       </div>
       <p className="text-sm font-semibold text-white mb-0.5">{artist.name}</p>
       <p className="text-xs text-zinc-400 mb-3">{artist.origin}</p>
