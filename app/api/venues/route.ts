@@ -10,6 +10,8 @@ export async function POST(req: Request) {
 
         const { artist, genre, location, date } = body;
 
+        // probably want more error handling here, for sure need a check for dupes before adding it
+        
         if (!artist || !genre || !location || !date) {
             return Response.json(
                 { error: "Missing required fields" },
@@ -30,6 +32,29 @@ export async function GET() {
 
     // sorts by ascending date
     const venues = await Venue.find().sort( { date: 1 });
+
+    return NextResponse.json(venues);
+}
+
+export async function GETFILTER(req: Request) {
+    await connectToDatabase();
+
+    const { searchParams } = new URL(req.url);
+    const query = searchParams.get("q");
+
+    let filter = {};
+
+    if (query) {
+        filter = {
+            $or: [
+                { artist: { $regex: query, $options: "i" } },
+                { location: { $regex: query, $options: "i" } },
+                { genre: { $regex: query, $options: "i" }},
+            ],
+        };
+    }
+
+    const venues = await Venue.find(filter).sort( { date: 1 });
 
     return NextResponse.json(venues);
 }
