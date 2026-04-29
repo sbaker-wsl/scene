@@ -10,7 +10,7 @@ export default function FeedPage() {
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
 
-  const SWIPE_THRESHOLD = 80;
+  const SWIPE_THRESHOLD = 50;
 
   const isAnimating = useRef(false);
 
@@ -31,18 +31,43 @@ export default function FeedPage() {
     return () => window.removeEventListener("wheel", handleWheel);
   });
 
+  const hasSwiped = useRef(false);
+
   // mobile (touch)
   const handleTouchStart = (e: any) => {
     touchStartY.current = e.touches[0].clientY;
+    hasSwiped.current = false;
   }
 
   const handleTouchEnd = (e: any) => {
+    if (hasSwiped.current) return;
+
     touchEndY.current = e.changedTouches[0].clientY;
 
     const diff = touchStartY.current - touchEndY.current;
 
-    if (diff > SWIPE_THRESHOLD) next();  // swipe up
-    if (diff < -SWIPE_THRESHOLD) prev(); // swipe down
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
+
+    hasSwiped.current = true;
+
+    if (diff > SWIPE_THRESHOLD) move("up");  // swipe up
+    else move("down"); // swipe down
+  };
+
+  const move = (direction: "up" | "down") => {
+    if (isAnimating.current) return;
+
+    isAnimating.current = true;
+
+    setIndex((prevIndex) => {
+      let newIndex = direction === "up" ? prevIndex + 1 : prevIndex-1;
+
+      return Math.max(0, Math.min(newIndex, venues.length - 1));
+    });
+
+    setTimeout(() => {
+      isAnimating.current = false;
+    }, 600);
   };
 
   const next = () => {
