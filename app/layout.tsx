@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { Home, ListMusic, Search, User } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,17 +33,21 @@ export default function RootLayout({
         </main>
 
         {/* Bottom nav stays at bottom but scrolls with page */}
-        <nav className="sticky bottom-0 bg-gray-600 shadow-inner p-4 flex justify-around">
-          <Link href="/" className="text-white hover:text-white-900 text-sm font-medium">
+        <nav className="sticky bottom-0 bg-gray-800 shadow-inner p-3 flex justify-around text-white">
+          <Link href="/" className="flex flex-col items-center text-xs gap-1">
+          <Home size={20}/>
             Home
           </Link>
-          <Link href="/feed" className="text-white hover:text-gray-900 text-sm font-medium">
+          <Link href="/feed" className="flex flex-col items-center text-xs gap-1">
+          <ListMusic size={20}/>
             Feed
           </Link>
-          <Link href="/search" className="text-white hover:text-gray-900 text-sm font-medium">
+          <Link href="/search" className="flex flex-col items-center text-xs gap-1">
+          <Search size={20}/>
             Search
           </Link>
-          <Link href="/dashboard" className="text-white hover:text-gray-900 text-sm font-medium">
+          <Link href="/dashboard" className="flex flex-col items-center text-xs gap-1">
+          <User size={20}/>
             Account
           </Link>
         </nav>
