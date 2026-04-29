@@ -49,6 +49,10 @@ export default function FeedPage() {
     hasSwiped.current = false;
   }
 
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault();
+  };
+
   const handleTouchEnd = (e: any) => {
     if (hasSwiped.current) return;
 
@@ -60,7 +64,7 @@ export default function FeedPage() {
 
     hasSwiped.current = true;
 
-    if (diff > SWIPE_THRESHOLD) move("up");  // swipe up
+    if (diff > 0) move("up");  // swipe up
     else move("down"); // swipe down
   };
 
@@ -79,6 +83,16 @@ export default function FeedPage() {
       isAnimating.current = false;
     }, 600);
   };
+
+  useEffect(() => {
+    const el = document.body;
+    
+    el.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      el.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
 
   return (
     <div className="h-screen overflow-hidden"
