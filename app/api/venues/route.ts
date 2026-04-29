@@ -27,16 +27,7 @@ export async function POST(req: Request) {
     }
 }
 
-export async function GET() {
-    await connectToDatabase();
-
-    // sorts by ascending date
-    const venues = await Venue.find().sort( { date: 1 });
-
-    return NextResponse.json(venues);
-}
-
-export async function GETFILTER(req: Request) {
+export async function GET(req: Request) {
     await connectToDatabase();
 
     const { searchParams } = new URL(req.url);
