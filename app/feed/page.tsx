@@ -10,6 +10,8 @@ export default function FeedPage() {
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
 
+  const SWIPE_THRESHOLD = 80;
+
   const isAnimating = useRef(false);
 
   useEffect(() => {
@@ -39,8 +41,8 @@ export default function FeedPage() {
 
     const diff = touchStartY.current - touchEndY.current;
 
-    if (diff > 50) next();  // swipe up
-    if (diff < -50) prev(); // swipe down
+    if (diff > SWIPE_THRESHOLD) next();  // swipe up
+    if (diff < -SWIPE_THRESHOLD) prev(); // swipe down
   };
 
   const next = () => {
