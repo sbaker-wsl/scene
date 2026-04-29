@@ -20,10 +20,20 @@ export default function FeedPage() {
     .then(setVenues);
   }, []);
 
+  const isScrolling = useRef(false);
+
   // mouse wheel
   const handleWheel = (e: WheelEvent) => {
-    if (e.deltaY > 0) next();
-    else prev();
+    if (isScrolling.current) return;
+    if (Math.abs(e.deltaY) < 30) return;
+
+    isScrolling.current = true;
+
+    move(e.deltaY > 0 ? "up" : "down");
+    
+    setTimeout(() => {
+      isScrolling.current = false;
+    }, 600);
   };
 
   useEffect(() => {
@@ -68,28 +78,6 @@ export default function FeedPage() {
     setTimeout(() => {
       isAnimating.current = false;
     }, 600);
-  };
-
-  const next = () => {
-    if (isAnimating.current) return;
-    isAnimating.current = true;
-
-    setIndex((i) => Math.min(i+1, venues.length - 1));
-
-    setTimeout(() => {
-      isAnimating.current = false;
-    }, 500);
-  };
-
-  const prev = () => {
-    if (isAnimating.current) return;
-    isAnimating.current = true;
-
-    setIndex((i) => Math.max(i - 1, 0));
-
-    setTimeout(() => {
-      isAnimating.current = false;
-    }, 500);
   };
 
   return (
