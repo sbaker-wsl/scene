@@ -10,6 +10,8 @@ export default function FeedPage() {
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
 
+  const isAnimating = useRef(false);
+
   useEffect(() => {
     fetch("/api/venues")
     .then((res) => res.json())
@@ -42,11 +44,25 @@ export default function FeedPage() {
   };
 
   const next = () => {
+    if (isAnimating.current) return;
+    isAnimating.current = true;
+
     setIndex((i) => Math.min(i+1, venues.length - 1));
+
+    setTimeout(() => {
+      isAnimating.current = false;
+    }, 500);
   };
 
   const prev = () => {
+    if (isAnimating.current) return;
+    isAnimating.current = true;
+
     setIndex((i) => Math.max(i - 1, 0));
+
+    setTimeout(() => {
+      isAnimating.current = false;
+    }, 500);
   };
 
   return (
