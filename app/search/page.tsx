@@ -17,7 +17,7 @@ export default function SearchPage() {
   }, [query]);
 
   return (
-    <div className="p-4 text-white bg-black">
+    <div className="p-4 text-white">
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}

@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-black relative min-h-screen flex flex-col">
         {/* Scrollable content */}
-        <main className="flex-1">
+        <main className="flex-1 min-h-screen bg-black">
           {children}
         </main>
 
