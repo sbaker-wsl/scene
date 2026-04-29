@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { redirect } from "next/navigation"
 
 export default function CreateVenuesPage() {
     const [form, setForm] = useState({
@@ -43,6 +44,11 @@ export default function CreateVenuesPage() {
 
         const data = await res.json();
         console.log(data);
+
+        // i think we need error catching here?
+
+        alert("New venue created!");
+        redirect("/feed");
     };
 
     return (
