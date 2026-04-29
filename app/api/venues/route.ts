@@ -7,6 +7,15 @@ export async function POST(req: Request) {
         await connectToDatabase();
 
         const body = await req.json();
+
+        const { artist, genre, location, date } = body;
+
+        if (!artist || !genre || !location || !date) {
+            return Response.json(
+                { error: "Missing required fields" },
+                { status: 400 }
+            );
+        }
         
         const venue = await Venue.create(body);
 
