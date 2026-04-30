@@ -45,7 +45,7 @@ export function VenueCard( { venue }: any) {
         </div>
         {showComments && (
   <div
-    className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+    className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center"
     onClick={() => setShowComments(false)}
   >
     <div
