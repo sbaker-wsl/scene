@@ -13,6 +13,8 @@ export default function CreateVenuesPage() {
         location: "",
         date: "",
         time: "",
+        contact: "",
+        price: "",
     });
 
     const handleChange = (e: any) => {

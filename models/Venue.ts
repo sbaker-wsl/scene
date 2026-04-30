@@ -19,6 +19,21 @@ const venueSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    contact: {
+        type: String,
+        required: true,
+        trim: true,
+        validate: {
+            validator: (v: string) => /^[0-9\-+() ]+$/.test(v),
+            message: "Invalid phone number format",
+        },
+    },
+    price: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: (v: number) => parseFloat(v.toFixed(2)),
+    }
 });
 
 // this ensures that you cannot insert 2 documents with the same artist + location + date

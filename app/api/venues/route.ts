@@ -8,11 +8,11 @@ export async function POST(req: Request) {
 
         const body = await req.json();
 
-        const { artist, genre, location, date } = body;
+        const { artist, genre, location, date, contact, price } = body;
 
         // probably want more error handling here, for sure need a check for dupes before adding it
         
-        if (!artist || !genre || !location || !date) {
+        if (!artist || !genre || !location || !date || !contact || !price) {
             return Response.json(
                 { error: "Missing required fields" },
                 { status: 400 }
