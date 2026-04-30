@@ -8,7 +8,7 @@ export function VenueCard( { venue, resetSignal }: any) {
     const [copied, setCopied] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [comment, setComment] = useState("");
-    const [comments, setComments] = useState(venue.comments || []);
+    const [comments, setComments] = useState(Array.isArray(venue.comments) ? venue.comments : []);
 
     useEffect(() => {
         setShowComments(false);

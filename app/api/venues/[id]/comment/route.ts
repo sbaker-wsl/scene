@@ -4,16 +4,21 @@ import connectToDatabase from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import Venue from "@/models/Venue";
 
-export async function GET(req: Request, { params }: any) {
+export async function GET(req: Request, context: any) {
     await connectToDatabase();
+    const { params } = context;
+    const { id } = await params;
 
-    const venue = await Venue.findById(params.id).populate("comments.user");
+    const venue = await Venue.findById(id).populate("comments.user");
 
     return NextResponse.json(venue.comments);
 }
 
-export async function POST(req: Request, { params }: any) {
+export async function POST(req: Request, context: any) {
     await connectToDatabase();
+
+    const { params } = context;
+    const { id } = await params;
 
     const tokenStore = await cookies();
     const token = tokenStore.get('token')?.value
@@ -36,7 +41,7 @@ export async function POST(req: Request, { params }: any) {
 
     const userId = decoded.userId;
 
-    const venue = await Venue.findByIdAndUpdate(params.id, {
+    const venue = await Venue.findByIdAndUpdate(id, {
         $push: {
             comments: {
                 user: userId,
