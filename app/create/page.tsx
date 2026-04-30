@@ -24,6 +24,24 @@ export default function CreateVenuesPage() {
         });
     };
 
+    const handlePhoneChange = (e: any) => {
+      const raw = e.target.value.replace(/\D/g, ""); 
+      if (raw.length > 10) return;
+      
+      let value = raw;
+      if (raw.length >= 7 ) {
+        value = raw.slice(0,3) + "-" + raw.slice(3,6) + "-" + raw.slice(6);
+      } else if (raw.length >= 4) {
+        value = raw.slice(0,3) + "-" + raw.slice(3);
+      }
+
+      setForm({
+        ...form,
+        contact: value,
+      });
+    
+      }
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -122,22 +140,26 @@ export default function CreateVenuesPage() {
         />
 
         <input
-          type="tel"
+          type="text"
           name="contact"
-          placeholder="Phone number"
-          onChange={handleChange}
+          placeholder = "XXX-XXX-XXXX"
+          onChange={handlePhoneChange}
+          maxLength = {12}
           className="w-full p-3 rounded bg-zinc-800"
         />
 
-        <input
-          type="number"
-          name="price"
-          step="0.01"
-          min="0"
-          placeholder="Price"
-          onChange={handleChange}
-          className="w-full p-3 rounded bg-zinc-800"
-        />
+        <div className = "relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+          <input
+            type="number"
+            name="price"
+            step="0.01"
+            min="0"
+            placeholder="Price"
+            onChange={handleChange}
+            className="w-full p-3 rounded bg-zinc-800"
+          />
+        </div>
 
         <button
           type="submit"
