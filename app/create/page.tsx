@@ -40,9 +40,9 @@ export default function CreateVenuesPage() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                artist: form.artist,
+                artist: form.artist.trim().toLowerCase(),
                 genre: form.genre,
-                location: form.location,
+                location: form.location.trim().toLowerCase(),
                 date: combinedDate,
             }),
         });
