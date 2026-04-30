@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Phone } from "lucide-react"
+import { createPortal } from "react-dom";
 
 export function VenueCard( { venue }: any) {
     const date = new Date(venue.date);
@@ -43,74 +44,46 @@ export function VenueCard( { venue }: any) {
                 {date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit"})}
             </p>
         </div>
-        {showComments && (
-  <div
-    className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center"
-    onClick={() => setShowComments(false)}
-  >
-    <div
-      className="bg-gray-900 w-[90%] max-w-md rounded-xl p-4 flex flex-col"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Header */}
-      <div className="flex justify-between items-center mb-3">
-        <h2 className="text-white font-semibold">Comments</h2>
-        <button
-          onClick={() => setShowComments(false)}
-          className="text-gray-400 hover:text-white"
-        >
-          ✕
-        </button>
-      </div>
+        {showComments &&
+      createPortal(
+        <div className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center">
+          <div className="bg-gray-900 w-[90%] max-w-md rounded-xl p-4 max-h-[80vh] flex flex-col">
 
-      {/* Comments list */}
-      <div className="flex-1 overflow-y-auto space-y-3 max-h-60">
-        {comments.length === 0 ? (
-          <p className="text-gray-500 text-sm">No comments yet</p>
-        ) : (
-          comments.map((c: any, i: number) => (
-            <div key={i} className="bg-gray-800 p-2 rounded">
-              <p className="text-sm text-white">{c.text}</p>
-              <p className="text-xs text-gray-500">
-                {c.user?.username || "Anonymous"}
-              </p>
+            {/* header */}
+            <div className="flex justify-between mb-3">
+              <h2 className="text-white">Comments</h2>
+              <button onClick={() => setShowComments(false)}>✕</button>
             </div>
-          ))
-        )}
-      </div>
 
-      {/* Input */}
-      <div className="mt-3 flex gap-2">
-        <input
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Write a comment..."
-          className="flex-1 p-2 bg-gray-800 text-white rounded"
-        />
-        <button
-          onClick={async () => {
-            if (!comment.trim()) return;
+            {/* scrollable area */}
+            <div className="flex-1 overflow-y-auto space-y-2">
+              {comments.map((c: any, i: number) => (
+                <div key={i} className="bg-gray-800 p-2 rounded">
+                  <p className="text-white text-sm">{c.text}</p>
+                  <p className="text-xs text-gray-400">
+                    {c.user?.username}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-            const res = await fetch(`/api/venues/${venue._id}/comment`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ text: comment }),
-            });
+            {/* input */}
+            <div className="mt-3 flex gap-2">
+              <input
+                className="flex-1 p-2 bg-gray-800 text-white rounded"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <button className="bg-blue-500 px-3 rounded text-white">
+                Post
+              </button>
+            </div>
 
-            const data = await res.json();
-
-            setComments(data.comments); // update UI
-            setComment("");
-          }}
-          className="bg-blue-500 px-3 rounded text-white"
-        >
-          Post
-        </button>
-      </div>
-    </div>
-  </div>
-    )}
-    </>
-    
+          </div>
+        </div>,
+        document.body
+      )
+    }
+  </>
 );
 }
