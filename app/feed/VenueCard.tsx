@@ -17,7 +17,7 @@ export function VenueCard( { venue, resetSignal }: any) {
     useEffect(() => {
         if (!showComments) return;
 
-        fetch(`/api/venues/${venue._id}/comments`)
+        fetch(`/api/venues/${venue._id}/comment`)
         .then((res) => res.json())
         .then(setComments);
     }, [showComments]);
