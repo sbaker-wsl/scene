@@ -164,7 +164,7 @@ export default function CreateVenuesPage() {
           min="0"
           placeholder="0.00"
           value = {form.price}
-          onChange={handleChange}
+          onChange={handlePriceChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
 
