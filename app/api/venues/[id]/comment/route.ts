@@ -4,6 +4,14 @@ import { connectToDatabase } from "@/lib/db";
 import { NextResponse } from "next/server";
 import Venue from "@/models/Venue";
 
+export async function GET(req: Request, { params }: any) {
+    await connectToDatabase();
+
+    const venue = await Venue.findById(params.id).populate("comments.user");
+
+    return NextResponse.json(venue.comments);
+}
+
 export async function POST(req: Request, { params }: any) {
     await connectToDatabase();
 

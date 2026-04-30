@@ -1,13 +1,47 @@
 import { useState } from "react";
 import { Phone } from "lucide-react"
 import { createPortal } from "react-dom";
+import { useEffect } from "react";
 
-export function VenueCard( { venue }: any) {
+export function VenueCard( { venue, resetSignal }: any) {
     const date = new Date(venue.date);
     const [copied, setCopied] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState(venue.comments || []);
+
+    useEffect(() => {
+        setShowComments(false);
+    }, [resetSignal]);
+
+    useEffect(() => {
+        if (!showComments) return;
+
+        fetch(`/api/venues/${venue._id}/comments`)
+        .then((res) => res.json())
+        .then(setComments);
+    }, [showComments]);
+
+    const handlePost = async () => {
+        if (!comment.trim()) return;
+
+        const res = await fetch(`/api/venues/${venue._id}/comments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text: comment }),
+        });
+
+        if (!res.ok) {
+            alert("Failed to post comment");
+            return;
+        }
+
+        const updatedComments = await res.json();
+        setComments(updatedComments);
+        setComment("");
+    };
 
     const handleContact =() => {
         navigator.clipboard.writeText(venue.contact);
@@ -52,7 +86,9 @@ export function VenueCard( { venue }: any) {
             {/* header */}
             <div className="flex justify-between mb-3">
               <h2 className="text-white">Comments</h2>
-              <button onClick={() => setShowComments(false)}>✕</button>
+              <button className="text-white hover:opacity-70" onClick={() => setShowComments(false)}>
+                ✕
+              </button>
             </div>
 
             {/* scrollable area */}
@@ -74,7 +110,7 @@ export function VenueCard( { venue }: any) {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
-              <button className="bg-blue-500 px-3 rounded text-white">
+              <button className="bg-blue-500 px-3 rounded text-white" onClick={handlePost}>
                 Post
               </button>
             </div>

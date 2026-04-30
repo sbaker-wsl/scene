@@ -109,7 +109,7 @@ export default function FeedPage() {
             key={i}
             className="h-screen flex items-center justify-center bg-black text-white"
           >
-            <VenueCard venue={venue} />
+            <VenueCard venue={venue} resetSignal={index} />
           </div>
         ))}
       </div>
