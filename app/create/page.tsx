@@ -82,7 +82,7 @@ export default function CreateVenuesPage() {
                 location: form.location.trim().toLowerCase(),
                 date: combinedDate,
                 contact: form.contact.trim(),
-
+                price: parseFloat(form.price),
             }),
         });
 
@@ -159,7 +159,7 @@ export default function CreateVenuesPage() {
         />
       
         <input
-          type="number"
+          type="text"
           name="price"
           min="0"
           placeholder="0.00"
