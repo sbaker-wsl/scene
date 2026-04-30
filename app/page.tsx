@@ -88,7 +88,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="bg-black min-h-screen px-6 py-8 space-y-10 max-w-7xl mx-auto">
+    <main className="bg-black min-h-screen px-6 py-8 space-y-10 pt-10">
 
       {/* 🔥 Happening Soon */}
       <section>
