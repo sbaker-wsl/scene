@@ -10,7 +10,7 @@ export async function GET(req: Request, context: any) {
     const { params } = context;
     const { id } = await params;
 
-    const venue = await Venue.findById(id).populate("comments.user", "username");
+    const venue = await Venue.findById(id).populate("comments.user", "username").lean();
 
     return NextResponse.json(venue.comments);
 }
