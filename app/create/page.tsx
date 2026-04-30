@@ -120,7 +120,7 @@ export default function CreateVenuesPage() {
           type="time"
           name="time"
           value={form.time}
-          onChange={handleChange}
+          onChange={handleDateChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
 
