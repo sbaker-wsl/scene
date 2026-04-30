@@ -88,7 +88,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="bg-black min-h-screen px-6 py-8 space-y-10 flex items-center justify-center min-h-screen">
+    <main className="bg-black min-h-screen px-6 py-8 space-y-10 flex flex-col items-center">
 
       {/* 🔥 Happening Soon */}
       <section>
