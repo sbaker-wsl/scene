@@ -124,7 +124,7 @@ export default function CreateVenuesPage() {
         <input
           type="tel"
           name="contact"
-          placeholder="Phone number"
+          placeholder="Contact number"
           onChange={handleChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
