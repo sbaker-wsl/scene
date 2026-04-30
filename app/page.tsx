@@ -88,8 +88,7 @@ export default function HomePage() {
   }
 
   return (
-    <body className="bg-black min-h-screen flex flex-col px-6 py-8 space-y-10">
-    <main className="flex-1">
+    <main className="bg-black min-h-screen px-6 py-8 space-y-10">
 
       {/* 🔥 Happening Soon */}
       <section>
@@ -137,6 +136,5 @@ export default function HomePage() {
       </section>
 
     </main>
-    </body>
   );
 }
