@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-import { connectToDatabase } from "@/lib/db";
+import connectToDatabase from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import Venue from "@/models/Venue";
 
@@ -18,14 +18,14 @@ export async function POST(req: Request, { params }: any) {
     const tokenStore = await cookies();
     const token = tokenStore.get('token')?.value
     if (!token) {
-        return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
     
     let decoded;
     try {
         decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
     } catch (error) {
-        return Response.json({ error: 'Invalid token' }, { status: 401 })
+        return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
     const { text } = await req.json();
