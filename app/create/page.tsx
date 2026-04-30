@@ -160,7 +160,6 @@ export default function CreateVenuesPage() {
         <input
           type="text"
           name="price"
-          min="0"
           placeholder="0.00"
           value = {form.price}
           onChange={handlePriceChange}
