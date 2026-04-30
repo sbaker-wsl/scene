@@ -81,14 +81,56 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        Loading...
+    <div className="min-h-screen flex items-center justify-center bg-gray-950">
+      <div className="flex flex-col items-center gap-6">
+        
+        {/* Animated SVG Spinner */}
+        <div className="w-16 h-16">
+          <svg
+            className="animate-spin"
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+              className="text-gray-700"
+            />
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray="90 150"
+              strokeDashoffset="0"
+              className="text-blue-500"
+            />
+          </svg>
+        </div>
+
+        {/* Text */}
+        <div className="text-center">
+          <p className="text-white text-lg font-medium tracking-wide">
+            Loading your account
+          </p>
+          <p className="text-gray-400 text-sm mt-1">
+            Just a moment...
+          </p>
+        </div>
+
       </div>
-    );
+    </div>
+    )
   }
 
   return (
-    <main className="bg-black min-h-screen px-6 py-8 space-y-10 pt-10">
+    <main className="bg-black min-h-screen px-6 py-8 space-y-10 pt-30">
 
       {/* 🔥 Happening Soon */}
       <section>
