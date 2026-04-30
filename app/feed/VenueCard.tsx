@@ -14,7 +14,6 @@ export function VenueCard( { venue }: any) {
     return (
         <div className="text-center space-y-4">
             <div className = "relative flex items-center justify-center">
-                {venue.contact && (
                 <button
                     onClick = {handleContact}
                     className="absolute right-0 p-1 hover:opacity-70 transition"
@@ -22,7 +21,7 @@ export function VenueCard( { venue }: any) {
                 >
                     <Phone size = {20} color = {copied ? "green" : "white"} />
                 </button>
-                )}
+                
                 <h1 className="text-4xl font-bold">{venue.artist}</h1>
             </div>
 
