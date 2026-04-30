@@ -49,8 +49,8 @@ export async function POST(req: Request, context: any) {
             },
         },
     },
-    { new: true }
+    { returnDocument: "after" }
     ).populate('comments.user', 'username');
 
-    return NextResponse.json(venue);
+    return NextResponse.json(venue.comments);
 }
