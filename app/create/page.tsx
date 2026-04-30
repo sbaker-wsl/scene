@@ -43,12 +43,11 @@ export default function CreateVenuesPage() {
     };
 
     const handlePriceChange = (e: any) => {
-      const value = e.target.value;
-      if (value.includes(".") && value.split(".")[1].length > 2) return;
-      setForm({
-        ...form,
-        price: value,
-      });
+      const value = e.target.value.replace(/[^0-9.]/g, "");
+      const parts = value.split(".");
+      if (parts.length > 2) return;
+      if (parts[1] && parts[1].length > 2) return;
+      setForm({ ...form, price: value });
     };
 
     const handleSubmit = async (e: any) => {
