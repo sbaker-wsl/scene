@@ -142,24 +142,22 @@ export default function CreateVenuesPage() {
         <input
           type="text"
           name="contact"
+          value = {form.contact}
           placeholder = "XXX-XXX-XXXX"
           onChange={handlePhoneChange}
           maxLength = {12}
           className="w-full p-3 rounded bg-zinc-800"
         />
-
-        <div className = "relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
-          <input
-            type="number"
-            name="price"
-            step="0.01"
-            min="0"
-            placeholder="Price"
-            onChange={handleChange}
-            className="w-full p-3 rounded bg-zinc-800"
-          />
-        </div>
+      
+        <input
+          type="number"
+          name="price"
+          step="0.01"
+          min="0"
+          placeholder="Price"
+          onChange={handleChange}
+          className="w-full p-3 rounded bg-zinc-800"
+        />
 
         <button
           type="submit"
