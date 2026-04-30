@@ -24,19 +24,6 @@ export default function CreateVenuesPage() {
         });
     };
 
-    // const handleDateChange = (e: any) => {
-    //   let value = e.target.value.replace("/\D/g,", "");
-    //   if (value.length > 8) return;
-
-    //   if (value.length >= 5) {
-    //     value = value.slice(0, 2) + "/" + value.slice(2, 4) + "/" + value.slice(4, 8);
-
-    //   } else if (value.length >= 3) {
-    //     value = value.slice(0, 2) + "/" + value.slice(2, 4);
-    //   }
-    //   setForm({ ...form, date: value });
-    // };
-
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -45,10 +32,17 @@ export default function CreateVenuesPage() {
             return;
         }
 
+        const year = new Date(form.date).getFullYear();
+        const currentYear = new Date().getFullYear();
+        if (year < currentYear || year > currentYear + 5) {
+            alert(`Please enter a date between ${currentYear} and ${currentYear + 5}`);
+            return;
+        }
+
+
         try {
 
-        const [month, day, year] = form.date.split("/");
-        const combinedDate = new Date(`${year}-${month}-${day}T${form.time}`);
+        const combinedDate = new Date(`${form.date}T${form.time}`);
 
         const res = await fetch("/api/venues", {
             method: "POST",
@@ -114,8 +108,6 @@ export default function CreateVenuesPage() {
         <input
           type="date"
           name="date"
-          value={form.date}
-          placeholder = "MM/DD/YYYY"
           onChange={handleChange}
           maxLength = {10} 
           min={new Date().toISOString().split("T")[0]}
@@ -125,7 +117,6 @@ export default function CreateVenuesPage() {
         <input
           type="time"
           name="time"
-          value={form.time}
           onChange={handleChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
