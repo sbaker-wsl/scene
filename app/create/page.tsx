@@ -24,6 +24,32 @@ export default function CreateVenuesPage() {
         });
     };
 
+    const handlePhoneChange = (e: any) => {
+      const raw = e.target.value.replace(/\D/g, ""); 
+      if (raw.length > 10) return;
+      
+      let value = raw;
+      if (raw.length >= 7 ) {
+        value = raw.slice(0,3) + "-" + raw.slice(3,6) + "-" + raw.slice(6);
+      } else if (raw.length >= 4) {
+        value = raw.slice(0,3) + "-" + raw.slice(3);
+      }
+
+      setForm({
+        ...form,
+        contact: value,
+      });
+    
+    };
+
+    const handlePriceChange = (e: any) => {
+      const value = e.target.value.replace(/[^0-9.]/g, "");
+      const parts = value.split(".");
+      if (parts.length > 2) return;
+      if (parts[1] && parts[1].length > 2) return;
+      setForm({ ...form, price: value });
+    };
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -55,7 +81,7 @@ export default function CreateVenuesPage() {
                 location: form.location.trim().toLowerCase(),
                 date: combinedDate,
                 contact: form.contact.trim(),
-
+                price: parseFloat(form.price),
             }),
         });
 
@@ -122,20 +148,21 @@ export default function CreateVenuesPage() {
         />
 
         <input
-          type="tel"
+          type="text"
           name="contact"
-          placeholder="Contact number"
-          onChange={handleChange}
+          value = {form.contact}
+          placeholder = "XXX-XXX-XXXX"
+          onChange={handlePhoneChange}
+          maxLength = {12}
           className="w-full p-3 rounded bg-zinc-800"
         />
-
+      
         <input
-          type="number"
+          type="text"
           name="price"
-          step="0.01"
-          min="0"
-          placeholder="Price"
-          onChange={handleChange}
+          placeholder="0.00"
+          value = {form.price}
+          onChange={handlePriceChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
 
