@@ -40,7 +40,16 @@ export default function CreateVenuesPage() {
         contact: value,
       });
     
-      }
+    };
+
+    const handlePriceChange = (e: any) => {
+      const value = e.target.value;
+      if (value.includes(".") && value.split(".")[1].length > 2) return;
+      setForm({
+        ...form,
+        price: value,
+      });
+    };
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -152,9 +161,9 @@ export default function CreateVenuesPage() {
         <input
           type="number"
           name="price"
-          step="0.01"
           min="0"
-          placeholder="Price"
+          placeholder="0.00"
+          value = {form.price}
           onChange={handleChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
