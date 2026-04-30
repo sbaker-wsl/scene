@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import connectToDatabase from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import Venue from "@/models/Venue";
-import User from "@/models/User";
+import "@/models/User";
 
 export async function GET(req: Request, context: any) {
     await connectToDatabase();
