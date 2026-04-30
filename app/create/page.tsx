@@ -60,6 +60,8 @@ export default function CreateVenuesPage() {
                 genre: form.genre,
                 location: form.location.trim().toLowerCase(),
                 date: combinedDate,
+                contact: form.contact.trim(),
+
             }),
         });
 
@@ -124,6 +126,24 @@ export default function CreateVenuesPage() {
           type="time"
           name="time"
           value={form.time}
+          onChange={handleChange}
+          className="w-full p-3 rounded bg-zinc-800"
+        />
+
+        <input
+          type="tel"
+          name="contact"
+          placeholder="Phone number"
+          onChange={handleChange}
+          className="w-full p-3 rounded bg-zinc-800"
+        />
+
+        <input
+          type="number"
+          name="price"
+          step="0.01"
+          min="0"
+          placeholder="Price"
           onChange={handleChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
