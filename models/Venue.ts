@@ -33,7 +33,25 @@ const venueSchema = new mongoose.Schema({
         required: true,
         min: 0,
         set: (v: number) => parseFloat(v.toFixed(2)),
-    }
+    },
+    comments: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
+            },
+            text: {
+                type: String,
+                required: true,
+                maxLength: 500,
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now,
+            },
+        },
+    ],
 });
 
 // this ensures that you cannot insert 2 documents with the same artist + location + date
