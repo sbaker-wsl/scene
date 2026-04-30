@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation";
 
 export default function CreateVenuesPage() {
+    const router = useRouter();
+
     const [form, setForm] = useState({
         artist: "",
         genre: "",
@@ -52,7 +55,7 @@ export default function CreateVenuesPage() {
 
         // success
         alert("New venue created!");
-        redirect("/feed");
+        router.push("/feed");
         
     } catch (err: any) {
         console.error(err);
