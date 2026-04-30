@@ -25,7 +25,7 @@ export function VenueCard( { venue, resetSignal }: any) {
     const handlePost = async () => {
         if (!comment.trim()) return;
 
-        const res = await fetch(`/api/venues/${venue._id}/comments`, {
+        const res = await fetch(`/api/venues/${venue._id}/comment`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
