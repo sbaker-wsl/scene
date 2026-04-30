@@ -21,4 +21,10 @@ const venueSchema = new mongoose.Schema({
     },
 });
 
+// this ensures that you cannot insert 2 documents with the same artist + location + date
+venueSchema.index(
+    { artist: 1, location: 1, date: 1},
+    { unique: true }
+);
+
 export default mongoose.models.Venue || mongoose.model("Venue", venueSchema);

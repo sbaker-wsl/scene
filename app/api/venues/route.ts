@@ -22,7 +22,10 @@ export async function POST(req: Request) {
         const venue = await Venue.create(body);
 
         return NextResponse.json(venue, { status: 201 });
-    } catch (err) {
+    } catch (err: any) {
+        if (err.code === 11000) {
+            return NextResponse.json({ message: "Venue already exists" }, { status: 400 });
+        }
         return NextResponse.json({ message: "Failed to create venue" }, { status: 500 });
     }
 }

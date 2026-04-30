@@ -27,6 +27,8 @@ export default function CreateVenuesPage() {
             return;
         }
 
+        try {
+
         const combinedDate = new Date(`${form.date}T${form.time}`);
 
         const res = await fetch("/api/venues", {
@@ -43,13 +45,20 @@ export default function CreateVenuesPage() {
         });
 
         const data = await res.json();
-        console.log(data);
+        
+        if (!res.ok) {
+            throw new Error(data.message || "Failed to create venue");
+        }
 
-        // i think we need error catching here?
-
+        // success
         alert("New venue created!");
         redirect("/feed");
-    };
+        
+    } catch (err: any) {
+        console.error(err);
+        alert("Error creating venue: " + err.message);
+    }
+};
 
     return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white">
