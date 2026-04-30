@@ -22,18 +22,18 @@ export default function CreateVenuesPage() {
         });
     };
 
-    const handleDateChange = (e: any) => {
-      let value = e.target.value.replace("/\D/g,", "");
-      if (value.length > 8) return;
+    // const handleDateChange = (e: any) => {
+    //   let value = e.target.value.replace("/\D/g,", "");
+    //   if (value.length > 8) return;
 
-      if (value.length >= 5) {
-        value = value.slice(0, 2) + "/" + value.slice(2, 4) + "/" + value.slice(4, 8);
+    //   if (value.length >= 5) {
+    //     value = value.slice(0, 2) + "/" + value.slice(2, 4) + "/" + value.slice(4, 8);
 
-      } else if (value.length >= 3) {
-        value = value.slice(0, 2) + "/" + value.slice(2, 4);
-      }
-      setForm({ ...form, date: value });
-    };
+    //   } else if (value.length >= 3) {
+    //     value = value.slice(0, 2) + "/" + value.slice(2, 4);
+    //   }
+    //   setForm({ ...form, date: value });
+    // };
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -108,11 +108,13 @@ export default function CreateVenuesPage() {
         />
 
         <input
-          type="text"
+          type="date"
           name="date"
           value={form.date}
           placeholder = "MM/DD/YYYY"
+          onChange={handleChange}
           maxLength = {10} 
+          min={new Date().toISOString().split("T")[0]}
           className="w-full p-3 rounded bg-zinc-800"
         />
 
@@ -120,7 +122,7 @@ export default function CreateVenuesPage() {
           type="time"
           name="time"
           value={form.time}
-          onChange={handleDateChange}
+          onChange={handleChange}
           className="w-full p-3 rounded bg-zinc-800"
         />
 
