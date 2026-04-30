@@ -117,7 +117,7 @@ export default function HomePage() {
         {/* Text */}
         <div className="text-center">
           <p className="text-white text-lg font-medium tracking-wide">
-            Loading your account
+            Loading content
           </p>
           <p className="text-gray-400 text-sm mt-1">
             Just a moment...
