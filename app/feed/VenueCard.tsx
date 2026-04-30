@@ -34,7 +34,7 @@ export function VenueCard( { venue, resetSignal }: any) {
         });
 
         if (!res.ok) {
-            alert("Failed to post comment");
+            alert(res.statusText || "Failed to post comment");
             return;
         }
 
