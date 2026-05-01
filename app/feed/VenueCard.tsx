@@ -3,7 +3,7 @@ import { Phone } from "lucide-react"
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
 
-export function VenueCard( { venue, resetSignal }: any) {
+export function VenueCard( { venue, resetSignal, setCommentsOpen }: any) {
     const date = new Date(venue.date);
     const [copied, setCopied] = useState(false);
     const [showComments, setShowComments] = useState(false);
@@ -74,7 +74,9 @@ export function VenueCard( { venue, resetSignal }: any) {
                     <Phone size = {30} color = {copied ? "green" : "white"} />
                 </button>
                 <button
-                    onClick={() => setShowComments(!showComments)}
+                    onClick={() => { 
+                        setShowComments(!showComments);
+                        setCommentsOpen(!showComments);}}
                     className="text-sm text-blue-400 hover:opacity-70"
                     >
                         Comments ({comments.length})
@@ -90,7 +92,7 @@ export function VenueCard( { venue, resetSignal }: any) {
             {/* header */}
             <div className="flex justify-between mb-3">
               <h2 className="text-white">Comments</h2>
-              <button className="text-white hover:opacity-70" onClick={() => setShowComments(false)}>
+              <button className="text-white hover:opacity-70" onClick={ () => { setShowComments(false);setCommentsOpen(false); }}>
                 ✕
               </button>
             </div>

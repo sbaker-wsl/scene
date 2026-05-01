@@ -6,6 +6,7 @@ import { VenueCard } from "./VenueCard";
 export default function FeedPage() {
   const [venues, setVenues] = useState([]);
   const [index, setIndex] = useState(0);
+  const [commentsOpen, setCommentsOpen] = useState(false);
 
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
@@ -24,6 +25,7 @@ export default function FeedPage() {
 
   // mouse wheel
   const handleWheel = (e: WheelEvent) => {
+    if (commentsOpen) return;
     if (isScrolling.current) return;
     if (Math.abs(e.deltaY) < 30) return;
 
@@ -37,6 +39,7 @@ export default function FeedPage() {
   };
 
   useEffect(() => {
+    if (commentsOpen) return;
     window.addEventListener("wheel", handleWheel);
     return () => window.removeEventListener("wheel", handleWheel);
   });
@@ -45,16 +48,19 @@ export default function FeedPage() {
 
   // mobile (touch)
   const handleTouchStart = (e: any) => {
+    if (commentsOpen) return;
     touchStartY.current = e.touches[0].clientY;
     hasSwiped.current = false;
   }
 
   const handleTouchMove = (e: TouchEvent) => {
+    if (commentsOpen) return;
     e.preventDefault();
   };
 
   const handleTouchEnd = (e: any) => {
     if (hasSwiped.current) return;
+    if (commentsOpen) return;
 
     touchEndY.current = e.changedTouches[0].clientY;
 
@@ -85,6 +91,15 @@ export default function FeedPage() {
   };
 
   useEffect(() => {
+    document.body.style.overflow = commentsOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    }
+  }, [commentsOpen])
+
+  useEffect(() => {
+    if (commentsOpen) return;
     const el = document.body;
     
     el.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -92,7 +107,7 @@ export default function FeedPage() {
     return () => {
       el.removeEventListener("touchmove", handleTouchMove);
     };
-  }, []);
+  }, [commentsOpen]);
 
   return (
     <div className="h-screen overflow-hidden"
@@ -109,7 +124,7 @@ export default function FeedPage() {
             key={i}
             className="h-screen flex items-center justify-center bg-black text-white"
           >
-            <VenueCard venue={venue} resetSignal={index} />
+            <VenueCard venue={venue} resetSignal={index} setCommentsOpen={setCommentsOpen} />
           </div>
         ))}
       </div>
