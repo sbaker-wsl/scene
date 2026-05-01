@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone } from "lucide-react"
+import { Phone, MessageCircle } from "lucide-react"
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
 
@@ -76,10 +76,12 @@ export function VenueCard( { venue, resetSignal, setCommentsOpen }: any) {
                 <button
                     onClick={() => { 
                         setShowComments(!showComments);
-                        setCommentsOpen(!showComments);}}
-                    className="text-sm text-blue-400 hover:opacity-70"
+                        setCommentsOpen(!showComments);
+                    }}
+                        className = "flex flex-col items-center gap-1 hover:opacity-70 transition"
                     >
-                        Comments ({comments.length})
+                        <MessageCircle size = {30} color = "white"/>
+                        <span className = "text-xs text-white"> {comments.length}</span>
                 </button>
             </div>   
         </div>
