@@ -51,7 +51,7 @@ export function VenueCard( { venue, resetSignal }: any) {
 
     return (
         <>
-        <div className="relative w-full h-screen flwx items-center justify-center">
+        <div className="relative w-full h-screen flex items-center justify-center">
 
             {/* Center Content */}
             <div className = "text-center space-y-4">
@@ -65,7 +65,7 @@ export function VenueCard( { venue, resetSignal }: any) {
             </div>
 
             {/* Right Side Buttons */}
-            <div className = "absolute right-8 flex flex-col items-center gap-6">
+            <div className = "absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-6">
                 <button
                     onClick = {handleContact}
                     className="p-1 hover:opacity-70 transition flex-shrink-0"
@@ -81,7 +81,7 @@ export function VenueCard( { venue, resetSignal }: any) {
                 </button>
             </div>   
         </div>
-        
+
         {showComments &&
       createPortal(
         <div className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center">
