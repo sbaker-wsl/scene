@@ -51,9 +51,21 @@ export function VenueCard( { venue, resetSignal }: any) {
 
     return (
         <>
-        <div className="text-center space-y-4">
-            <div className = "flex items-center justify-center gap-3">
+        <div className="relative w-full h-screen flwx items-center justify-center">
+
+            {/* Center Content */}
+            <div className = "text-center space-y-4">
                 <h1 className="text-4xl font-bold">{venue.artist}</h1>
+                <p className="text-xl">{venue.genre}</p>
+                <p>{venue.location}</p>
+                <p>
+                    {date.toLocaleDateString()} <br />
+                    {date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit"})}
+                </p>
+            </div>
+
+            {/* Right Side Buttons */}
+            <div className = "absolute right-8 flex flex-col items-center gap-6">
                 <button
                     onClick = {handleContact}
                     className="p-1 hover:opacity-70 transition flex-shrink-0"
@@ -67,16 +79,9 @@ export function VenueCard( { venue, resetSignal }: any) {
                     >
                         Comments ({comments.length})
                 </button>
-            </div>
-
-            <p className="text-xl">{venue.genre}</p>
-            <p>{venue.location}</p>
-
-            <p>
-                {date.toLocaleDateString()} <br />
-                {date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit"})}
-            </p>
+            </div>   
         </div>
+        
         {showComments &&
       createPortal(
         <div className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center">
