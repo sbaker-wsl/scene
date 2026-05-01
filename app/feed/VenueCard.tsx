@@ -52,22 +52,21 @@ export function VenueCard( { venue, resetSignal }: any) {
     return (
         <>
         <div className="text-center space-y-4">
-            <div className = "relative flex items-center justify-center">
+            <div className = "flex items-center justify-center gap-3">
+                <h1 className="text-4xl font-bold">{venue.artist}</h1>
                 <button
                     onClick = {handleContact}
-                    className="absolute right-0 p-1 hover:opacity-70 transition"
+                    className="p-1 hover:opacity-70 transition flex-shrink-0"
                     title={copied ? "Copied!" : "Copy Contact"}
                 >
-                    <Phone size = {20} color = {copied ? "green" : "white"} />
+                    <Phone size = {30} color = {copied ? "green" : "white"} />
                 </button>
                 <button
                     onClick={() => setShowComments(!showComments)}
                     className="text-sm text-blue-400 hover:opacity-70"
                     >
                         Comments ({comments.length})
-                    </button>
-                
-                <h1 className="text-4xl font-bold">{venue.artist}</h1>
+                </button>
             </div>
 
             <p className="text-xl">{venue.genre}</p>
