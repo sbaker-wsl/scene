@@ -22,6 +22,18 @@ export function VenueCard( { venue, resetSignal }: any) {
         .then(setComments);
     }, [showComments]);
 
+    useEffect(() => {
+        if (showComments) {
+            document.body.style.overflow = "auto";
+        } else {
+            document.body.style.overflow = "hidden";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+     }, [showComments]);
+
     const handlePost = async () => {
         if (!comment.trim()) return;
 
