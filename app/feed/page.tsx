@@ -91,6 +91,14 @@ export default function FeedPage() {
   };
 
   useEffect(() => {
+    document.body.style.overflow = commentsOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    }
+  }, [commentsOpen])
+
+  useEffect(() => {
     if (commentsOpen) return;
     const el = document.body;
     
