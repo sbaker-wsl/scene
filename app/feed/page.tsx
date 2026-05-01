@@ -91,6 +91,7 @@ export default function FeedPage() {
   };
 
   useEffect(() => {
+    if (commentsOpen) return;
     const el = document.body;
     
     el.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -98,7 +99,7 @@ export default function FeedPage() {
     return () => {
       el.removeEventListener("touchmove", handleTouchMove);
     };
-  }, []);
+  }, [commentsOpen]);
 
   return (
     <div className="h-screen overflow-hidden"
